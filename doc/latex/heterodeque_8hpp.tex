@@ -1,0 +1,37 @@
+\hypertarget{heterodeque_8hpp}{}\section{heterodeque.\+hpp File Reference}
+\label{heterodeque_8hpp}\index{heterodeque.\+hpp@{heterodeque.\+hpp}}
+{\ttfamily \#include $<$stdexcept$>$}\\*
+{\ttfamily \#include $<$typeinfo$>$}\\*
+{\ttfamily \#include $<$typeindex$>$}\\*
+{\ttfamily \#include $<$deque$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classheterogeneous_1_1heterodeque_3_01_t_00_01_types_8_8_8_4}{heterogeneous\+::heterodeque$<$ T, Types...$>$}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespaceheterogeneous_a07b85b338f75aad1a6b7a6755b1f1757}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator==} (const heterodeque$<$ Args\+\_\+lhs...$>$ \&lhs, const heterodeque$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a07b85b338f75aad1a6b7a6755b1f1757}
+
+\item 
+\hypertarget{namespaceheterogeneous_a1096d5c46762c03b40a2bf7e8899d06a}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator!=} (const heterodeque$<$ Args\+\_\+lhs...$>$ \&lhs, const heterodeque$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a1096d5c46762c03b40a2bf7e8899d06a}
+
+\item 
+\hypertarget{namespaceheterogeneous_a9573a37902e1564931a6d30a1c8ecda5}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$<$} (const heterodeque$<$ Args\+\_\+lhs...$>$ \&lhs, const heterodeque$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a9573a37902e1564931a6d30a1c8ecda5}
+
+\item 
+\hypertarget{namespaceheterogeneous_a4592c7d759fcd7de2514f39264b617f1}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$<$=} (const heterodeque$<$ Args\+\_\+lhs...$>$ \&lhs, const heterodeque$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a4592c7d759fcd7de2514f39264b617f1}
+
+\item 
+\hypertarget{namespaceheterogeneous_ad43c1cd2abe09bc114864bf6b80365f3}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$>$} (const heterodeque$<$ Args\+\_\+lhs...$>$ \&lhs, const heterodeque$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_ad43c1cd2abe09bc114864bf6b80365f3}
+
+\item 
+\hypertarget{namespaceheterogeneous_a84961f717a1f75ce7cce101444f8f84e}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$>$=} (const heterodeque$<$ Args\+\_\+lhs...$>$ \&lhs, const heterodeque$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a84961f717a1f75ce7cce101444f8f84e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This templated class replicates the features of an std\+::deque that can handle heterogeneous data types. 

@@ -1,0 +1,190 @@
+\hypertarget{classheterogeneous_1_1adaptor}{}\section{heterogeneous\+:\+:adaptor$<$ container\+\_\+type $>$ Class Template Reference}
+\label{classheterogeneous_1_1adaptor}\index{heterogeneous\+::adaptor$<$ container\+\_\+type $>$@{heterogeneous\+::adaptor$<$ container\+\_\+type $>$}}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a74d9c3ff7594935a12ccb50c28a5fe44}{}typedef container\+\_\+type\+::value\+\_\+type {\bfseries erased\+\_\+type}\label{classheterogeneous_1_1adaptor_a74d9c3ff7594935a12ccb50c28a5fe44}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a5715cec1ac4cd00188578a81ae332b71}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\using {\bfseries iterator} = type\+\_\+iterator$<$ container\+\_\+type, native\+\_\+type\+A $>$\label{classheterogeneous_1_1adaptor_a5715cec1ac4cd00188578a81ae332b71}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a371a1ea723cdc9da4c0726fa113ca3f6}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\using {\bfseries riterator} = type\+\_\+reverse\+\_\+iterator$<$ container\+\_\+type, native\+\_\+type\+A $>$\label{classheterogeneous_1_1adaptor_a371a1ea723cdc9da4c0726fa113ca3f6}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_ad8e0c3ca01a65885072b528b598ca14d}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\iterator$<$ native\+\_\+type\+A $>$ {\bfseries begin} ()\label{classheterogeneous_1_1adaptor_ad8e0c3ca01a65885072b528b598ca14d}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_af40b2c1427fd09faffa1bd25485dc78b}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\riterator$<$ native\+\_\+type\+A $>$ {\bfseries rbegin} ()\label{classheterogeneous_1_1adaptor_af40b2c1427fd09faffa1bd25485dc78b}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a05c5594ad4629a266a59f67da6796f57}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\iterator$<$ native\+\_\+type\+A $>$ {\bfseries end} ()\label{classheterogeneous_1_1adaptor_a05c5594ad4629a266a59f67da6796f57}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a0b6eab9b87a19f3fafcd26af0eebb047}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\riterator$<$ native\+\_\+type\+A $>$ {\bfseries rend} ()\label{classheterogeneous_1_1adaptor_a0b6eab9b87a19f3fafcd26af0eebb047}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_ad41b7c74b10ca0bc85e14751a05f7f31}{}{\bfseries adaptor} (container\+\_\+type $\ast$object)\label{classheterogeneous_1_1adaptor_ad41b7c74b10ca0bc85e14751a05f7f31}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a463aa605b7f4950153be7c134c51ec7c}{}{\bfseries adaptor} (container\+\_\+type \&object)\label{classheterogeneous_1_1adaptor_a463aa605b7f4950153be7c134c51ec7c}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_aa586776a2972693fbd7ab1abb9ae9e45}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\size\+\_\+t \hyperlink{classheterogeneous_1_1adaptor_aa586776a2972693fbd7ab1abb9ae9e45}{size} ()\label{classheterogeneous_1_1adaptor_aa586776a2972693fbd7ab1abb9ae9e45}
+
+\begin{DoxyCompactList}\small\item\em Returns number of elements of type native\+\_\+type\+A in object. \end{DoxyCompactList}\item 
+\hypertarget{classheterogeneous_1_1adaptor_a0ed6323a271c780579af055e9b7d3352}{}{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\bool \hyperlink{classheterogeneous_1_1adaptor_a0ed6323a271c780579af055e9b7d3352}{empty} ()\label{classheterogeneous_1_1adaptor_a0ed6323a271c780579af055e9b7d3352}
+
+\begin{DoxyCompactList}\small\item\em Returns whether object contains any elements of type native\+\_\+type\+A or not. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\native\+\_\+type\+A \& \hyperlink{classheterogeneous_1_1adaptor_aecda6883cc85e9b3b1512f75eb41afd0}{first} ()
+\begin{DoxyCompactList}\small\item\em Returns reference to first element of type native\+\_\+type\+A. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\native\+\_\+type\+A \& \hyperlink{classheterogeneous_1_1adaptor_ae3aba48b5e083029419a076bcf4e7ee4}{last} ()
+\begin{DoxyCompactList}\small\item\em Returns reference to last element of type native\+\_\+type\+A. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\erased\+\_\+type \& \hyperlink{classheterogeneous_1_1adaptor_a902b161fe63bc088e1665dba37068c24}{at} (const size\+\_\+t \&i)
+\begin{DoxyCompactList}\small\item\em Returns reference to the type-\/erased object of the ith element of native type native\+\_\+type\+A. \end{DoxyCompactList}\item 
+erased\+\_\+type \& \hyperlink{classheterogeneous_1_1adaptor_ab34b90fdb22a2523c1a305410f8dd468}{at} (const size\+\_\+t \&i)
+\begin{DoxyCompactList}\small\item\em Returns reference to the i-\/th type-\/erased object. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\native\+\_\+type\+A \& \hyperlink{classheterogeneous_1_1adaptor_ad19caaf6a3b4969206cb11b95cc45592}{get} (const size\+\_\+t \&i)
+\begin{DoxyCompactList}\small\item\em Returns reference to ith element of type native\+\_\+type\+A. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename native\+\_\+type\+A , typename native\+\_\+type\+B $>$ }\\bool \hyperlink{classheterogeneous_1_1adaptor_a7713117241f02ed8520ebdd8e038292d}{swap} (const size\+\_\+t \&i, const size\+\_\+t \&j)
+\begin{DoxyCompactList}\small\item\em Swaps the positions of two elements of differing types. \end{DoxyCompactList}\item 
+{\footnotesize template$<$typename native\+\_\+type\+A $>$ }\\bool \hyperlink{classheterogeneous_1_1adaptor_ac8d5edee453346cc7a6c7e5c01d34938}{swap} (const size\+\_\+t \&i, const size\+\_\+t \&j)
+\begin{DoxyCompactList}\small\item\em Swaps the positions of two elements of same types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_a7fbb11b172f26d228db561218a26304c}{}{\footnotesize template$<$typename container\+\_\+t , typename native\+\_\+t $>$ }\\class {\bfseries type\+\_\+iterator}\label{classheterogeneous_1_1adaptor_a7fbb11b172f26d228db561218a26304c}
+
+\item 
+\hypertarget{classheterogeneous_1_1adaptor_ac56e6451307e2015ec248a73f8bf75b4}{}{\footnotesize template$<$typename container\+\_\+t , typename native\+\_\+t $>$ }\\class {\bfseries type\+\_\+reverse\+\_\+iterator}\label{classheterogeneous_1_1adaptor_ac56e6451307e2015ec248a73f8bf75b4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classheterogeneous_1_1adaptor_a902b161fe63bc088e1665dba37068c24}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!at@{at}}
+\index{at@{at}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{at}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ template$<$typename native\+\_\+type\+A $>$ erased\+\_\+type\& {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::at (
+\begin{DoxyParamCaption}
+\item[{const size\+\_\+t \&}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_a902b161fe63bc088e1665dba37068c24}
+
+
+Returns reference to the type-\/erased object of the ith element of native type native\+\_\+type\+A. 
+
+If the ith element of type native\+\_\+type\+A does not exsist, throws std\+::out\+\_\+of\+\_\+range exception.
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Index of the element of type native\+\_\+type\+A of which to return a reference to. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classheterogeneous_1_1adaptor_ab34b90fdb22a2523c1a305410f8dd468}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!at@{at}}
+\index{at@{at}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{at}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ erased\+\_\+type\& {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::at (
+\begin{DoxyParamCaption}
+\item[{const size\+\_\+t \&}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_ab34b90fdb22a2523c1a305410f8dd468}
+
+
+Returns reference to the i-\/th type-\/erased object. 
+
+If the ith element does not exsist, throws std\+::out\+\_\+of\+\_\+range exception.
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Index of the element of which to return a reference to. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classheterogeneous_1_1adaptor_aecda6883cc85e9b3b1512f75eb41afd0}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!first@{first}}
+\index{first@{first}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{first}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ template$<$typename native\+\_\+type\+A $>$ native\+\_\+type\+A\& {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::first (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_aecda6883cc85e9b3b1512f75eb41afd0}
+
+
+Returns reference to first element of type native\+\_\+type\+A. 
+
+If no elements of type native\+\_\+type\+A exist, throws std\+::out\+\_\+of\+\_\+range exception. \hypertarget{classheterogeneous_1_1adaptor_ad19caaf6a3b4969206cb11b95cc45592}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!get@{get}}
+\index{get@{get}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{get}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ template$<$typename native\+\_\+type\+A $>$ native\+\_\+type\+A\& {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::get (
+\begin{DoxyParamCaption}
+\item[{const size\+\_\+t \&}]{i}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_ad19caaf6a3b4969206cb11b95cc45592}
+
+
+Returns reference to ith element of type native\+\_\+type\+A. 
+
+If the ith element of type native\+\_\+type\+A does not exsist, throws std\+::out\+\_\+of\+\_\+range exception.
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Index of the element of type native\+\_\+type\+A of which to return a reference to. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classheterogeneous_1_1adaptor_ae3aba48b5e083029419a076bcf4e7ee4}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!last@{last}}
+\index{last@{last}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{last}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ template$<$typename native\+\_\+type\+A $>$ native\+\_\+type\+A\& {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::last (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_ae3aba48b5e083029419a076bcf4e7ee4}
+
+
+Returns reference to last element of type native\+\_\+type\+A. 
+
+If no elements of type native\+\_\+type\+A exist, throws std\+::out\+\_\+of\+\_\+range exception. \hypertarget{classheterogeneous_1_1adaptor_a7713117241f02ed8520ebdd8e038292d}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!swap@{swap}}
+\index{swap@{swap}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{swap}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ template$<$typename native\+\_\+type\+A , typename native\+\_\+type\+B $>$ bool {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::swap (
+\begin{DoxyParamCaption}
+\item[{const size\+\_\+t \&}]{i, }
+\item[{const size\+\_\+t \&}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_a7713117241f02ed8520ebdd8e038292d}
+
+
+Swaps the positions of two elements of differing types. 
+
+Finds the i-\/th element of type native\+\_\+type\+A and the j-\/th element of type native\+\_\+type\+B. If both exist, the positions are swapped, and function returns true. If i $>$= \hyperlink{classheterogeneous_1_1adaptor_aa586776a2972693fbd7ab1abb9ae9e45}{size$<$native\+\_\+type\+A$>$()} or j $>$= \hyperlink{classheterogeneous_1_1adaptor_aa586776a2972693fbd7ab1abb9ae9e45}{size$<$native\+\_\+type\+B$>$()}, no swap is performed and function returns false.
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Index of the element of type native\+\_\+type\+A to swap with j. \\
+\hline
+{\em j} & Index of the element of type native\+\_\+type\+B to swap with i. \\
+\hline
+\end{DoxyParams}
+\hypertarget{classheterogeneous_1_1adaptor_ac8d5edee453346cc7a6c7e5c01d34938}{}\index{heterogeneous\+::adaptor@{heterogeneous\+::adaptor}!swap@{swap}}
+\index{swap@{swap}!heterogeneous\+::adaptor@{heterogeneous\+::adaptor}}
+\subsubsection[{swap}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename container\+\_\+type $>$ template$<$typename native\+\_\+type\+A $>$ bool {\bf heterogeneous\+::adaptor}$<$ container\+\_\+type $>$\+::swap (
+\begin{DoxyParamCaption}
+\item[{const size\+\_\+t \&}]{i, }
+\item[{const size\+\_\+t \&}]{j}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{classheterogeneous_1_1adaptor_ac8d5edee453346cc7a6c7e5c01d34938}
+
+
+Swaps the positions of two elements of same types. 
+
+Finds the i-\/th and j-\/th elements of type native\+\_\+type\+A. If both exist, the positions are swapped, and function returns true. If i,j $>$= \hyperlink{classheterogeneous_1_1adaptor_aa586776a2972693fbd7ab1abb9ae9e45}{size$<$native\+\_\+type\+A$>$()}, no swap is performed and function returns false.
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & Index of the element of type native\+\_\+type\+A to swap with j. \\
+\hline
+{\em j} & Index of the element of type native\+\_\+type\+A to swap with i. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{adaptor_8hpp}{adaptor.\+hpp}\end{DoxyCompactItemize}
