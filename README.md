@@ -28,7 +28,7 @@
    own std::vector, so all operations maintain their inherent benefit over other
    sequence container types.
    
-		Typical usage: Add template parameter to normal std::vector methods.
+   Typical usage: Add template parameter to normal std::vector methods.
 		heterogeneous:heterovector<int,double,std::string, double> hv;
 
 		hv.push_back<int>(2);
