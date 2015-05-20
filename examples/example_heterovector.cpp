@@ -10,35 +10,14 @@ int main()
     {
         //currently, only default constructor implemented
         heterogeneous::heterovector<int, std::string, int, int, double, std::string> hv;
-        
-        heterogeneous::heterovector<int, std::string, int, int, double, std::string> rv;
 
-        hv.push_back<int>(2);
-        hv.push_back<int>(6);
-        rv.push_back<int>(5);
-        
-        std::cout << hv.eq(rv) << std::endl;
-        std::cout << hv.lt(rv) << std::endl;
-        std::cout << hv.lte(rv) << std::endl;
-        std::cout << hv.gte(rv) << std::endl;
-        std::cout << hv.gt(rv) << std::endl;
-        std::cout << std::endl;
-        
-        std::cout << (hv == rv) << std::endl;
-        std::cout << (hv < rv)  << std::endl;
-        std::cout << (hv <= rv) << std::endl;
-        std::cout << (hv >= rv) << std::endl;
-        std::cout << (hv > rv)  << std::endl;
-        std::cout << std::endl;
-
-        hv.swap(rv);
         //direct insertion of doubles and std::strings into heterovector
         hv.reserve<double>(3);
         hv.push_back<double>(4.3);
         hv.push_back<std::string,0>("one");
-        hv.push_back<std::string, 0>(std::string("two"));
+        hv.push_back<std::string,0>(std::string("two"));
         hv.push_back<double, 0>(3.411);
-        hv.push_back<std::string, 0>(std::string("three"));
+        hv.push_back<std::string,0>(std::string("three"));
         std::string four = "four";
         hv.push_back<std::string, 0>(four);
         hv.push_back<double>(99.999);
@@ -54,8 +33,7 @@ int main()
         hv.set<int,1>(i); //sets second element of ints to i
         hv.resize<int>(4, 35); //add 4th value of 35, default to first int element
         hv.insert<int>(hv.begin<int,0>(), std::initializer_list < int > {0, 0}); //inserts two 0s at beginning of first int element
-
-        hv.emplace_back<int>(4);
+        hv.emplace_back<int,1>(4);  //add value of 4 to back of second element of ints
 
         //============================
         //data access methods below...
@@ -74,14 +52,14 @@ int main()
         }
         std::cout << std::endl;
         //element 1
-        for (auto itr = hv.begin<int, 1>(); itr != hv.end<int, 1>(); ++itr)
+        for (auto itr = hv.begin<int,1>(); itr != hv.end<int,1>(); ++itr)
         {
             std::cout << *itr << std::endl;
         }
         std::cout << std::endl;
 
         //reverse iterate over strings
-        hv.container<std::string, 0>()->push_back("implicitly convert me to a std::string!"); //implicit conversion
+        hv.container<std::string,0>()->push_back("implicitly convert me to a std::string!"); //implicit conversion
         for (auto itr = hv.rbegin<std::string>(); itr != hv.rend<std::string>(); ++itr)
         {
             std::cout << *itr << std::endl;
@@ -89,8 +67,8 @@ int main()
         std::cout << std::endl;
 
         //reverse iterate (const) over doubles
-        hv.container<double, 0>()->push_back(4335); //implicit conversion
-        hv.container<double, 1>()->push_back(497.0f); //implicit conversion
+        hv.container<double,0>()->push_back(4335);
+        hv.container<double,1>()->push_back(497.0f);
         //element 0
         for (auto itr = hv.crbegin<double,0>(); itr != hv.crend<double,0>(); ++itr)
         {
@@ -111,6 +89,7 @@ int main()
         }
         std::cout << std::endl;
 
+
         //get info about various types in heterovector
         std::cout << hv.size<int,0>() << std::endl;
         std::cout << hv.size<int,1>() << std::endl;
@@ -129,6 +108,7 @@ int main()
         std::cout << hv.multiplicity<std::string>() << " double multiplicity" << std::endl;
         std::cout << std::endl;
 
+        // check whether heterovector contains a type
         std::cout << hv.contains<double>() << std::endl;
         std::cout << hv.contains<float>() << std::endl;
         std::cout << hv.contains<std::string>() << std::endl;
