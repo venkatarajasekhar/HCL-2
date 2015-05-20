@@ -1,7 +1,7 @@
 # HCL: Heterogeneous Container Library
 
 ## Tested On
-* g++ 4.9.1 (MinGW-w64)
+* g++ 4.9.1 (x86_64-win32-seh-rev1, MinGW-w64)
 * MS vc12 (Visual Studio 2013)
 * MS vc14 RC (Visual Studio 2015 RC)
 * LLVM clang 3.6.0
