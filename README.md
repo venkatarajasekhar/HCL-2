@@ -19,7 +19,7 @@
 * **adaptor.hpp**:
    Provides a common interface for retrieving data from a sequence
    container of type-erased data types (boost::any, boost::variant).
-   Type-erased type MUST implement a get<typename T>() function natively,
+   Type-erased type MUST implement a *get\<typename T\>()* function natively,
    or user must define it.
    
 * **heterovector.hpp**:
