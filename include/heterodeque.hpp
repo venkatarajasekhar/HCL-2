@@ -71,7 +71,7 @@ namespace heterogeneous
         // User must be aware of this as it may not produce expected result
         // =========================================================================
 
-		/*!
+        /*!
         * \brief Returns true if == operator evaluates to true for all elements in object.
         */
         bool operator==(const heterodeque<T, Types...>& rhs)
@@ -80,15 +80,15 @@ namespace heterogeneous
             return next().operator==(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Returns true if == operator evaluates to false for any element in object.
         */
         bool operator!=(const heterodeque<T, Types...>& rhs)
         {
             return !operator==(rhs);
         }
-		
-		/*!
+        
+        /*!
         * \brief Returns true if < operator evaluates to true for all elements in object.
         */
         bool operator<(const heterodeque<T, Types...>& rhs)
@@ -97,7 +97,7 @@ namespace heterogeneous
             return next().operator<(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Returns true if > operator evaluates to true for all elements in object.
         */
         bool operator>(const heterodeque<T, Types...>& rhs)
@@ -106,7 +106,7 @@ namespace heterogeneous
             return next().operator>(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Returns true if <= operator evaluates to true for all elements in object.
         */
         bool operator<=(const heterodeque<T, Types...>& rhs)
@@ -115,7 +115,7 @@ namespace heterogeneous
             return next().operator<=(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Returns true if >= operator evaluates to true for all elements in object.
         */
         bool operator>= (const heterodeque<T, Types...>& rhs)
@@ -124,7 +124,7 @@ namespace heterogeneous
             return next().operator>=(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Same as operator==() but strictly enforces container element size matching.
         */
         bool eq(const heterodeque<T, Types...>& rhs)
@@ -138,15 +138,15 @@ namespace heterogeneous
             return next().eq(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Same as operator!=() but strictly enforces container element size matching.
         */
         bool ne(const heterodeque<T, Types...>& rhs)
         {
             return !eq(rhs);
         }
-		
-		/*!
+        
+        /*!
         * \brief Same as operator<() but strictly enforces container element size matching.
         */
         bool lt(const heterodeque<T, Types...>& rhs)
@@ -160,7 +160,7 @@ namespace heterogeneous
             return next().lt(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Same as operator>() but strictly enforces container element size matching.
         */
         bool gt(const heterodeque<T, Types...>& rhs)
@@ -175,7 +175,7 @@ namespace heterogeneous
             return next().gt(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Same as operator<=() but strictly enforces container element size matching.
         */
         bool lte(const heterodeque<T, Types...>& rhs)
@@ -189,7 +189,7 @@ namespace heterogeneous
             return next().lte(rhs.next());
         }
 
-		/*!
+        /*!
         * \brief Same as operator>=() but strictly enforces container element size matching.
         */
         bool gte(const heterodeque<T, Types...>& rhs)
@@ -1225,7 +1225,7 @@ namespace heterogeneous
         }
     };
 
-	/*!
+    /*!
     * \cond Skip Doxygen documentation of this specialization.
     */
     // Entire heterodeque<> specialization marked private
@@ -1265,19 +1265,19 @@ namespace heterogeneous
         bool operator>=(const heterodeque<>& rhs)
         { return  true; }
 
-		bool eq(const heterodeque<>& rhs)
+        bool eq(const heterodeque<>& rhs)
         { return true; }
-		
-		bool lt(const heterodeque<>& rhs)
+        
+        bool lt(const heterodeque<>& rhs)
         { return true; }
-		
-		bool gt(const heterodeque<>& rhs)
+        
+        bool gt(const heterodeque<>& rhs)
         { return true; }
-		
-		bool lte(const heterodeque<>& rhs)
+        
+        bool lte(const heterodeque<>& rhs)
         { return true; }
-		
-		bool gte(const heterodeque<>& rhs)
+        
+        bool gte(const heterodeque<>& rhs)
         { return true; }
 
         // Iterators
@@ -1499,7 +1499,7 @@ namespace heterogeneous
             counter_ = pntr;
         }
     };
-	/*!
+    /*!
     * \endcond
     */
 

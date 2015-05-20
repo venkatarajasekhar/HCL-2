@@ -32,34 +32,34 @@
    Typical usage for all heterocontainers:
      Add template parameter to normal std::*container* methods.
    
-		heterogeneous:heterovector<int, double, std::string, double> hv;
+        heterogeneous:heterovector<int, double, std::string, double> hv;
 
-		hv.push_back<int>(2);
-		hv.push_back<double>(3.1415); // defaults to first double element
-		hv.push_back<double,0>(9); // specifically denote first double element
-		hv.push_back<std::string>( std::string("hello") );
-		hv.push_back<std::string>("world!"); // implicit conversion to std::string
-		
-		hv.size<int>; // 1
-		hv.size<double>; // 2 (defaults to first double element)
-		hv.size<double,1>; // 0
-		hv.size<std::string> // 2
-		
-		// print all integers
-		for( auto itr = ht.begin<int>(); itr != ht.end<int>(); ++ht )
-		std::cout << *itr << std::endl;
-		
-		// print all doubles (first element)
-		for( auto itr = ht.begin<double,0>(); itr != ht.end<double,0>(); ++ht )
-		std::cout << *itr << std::endl;
-		
-		// print all std::strings
-		for( auto itr = ht.begin<std::string,0>(); itr != ht.end<std::string,0>(); ++ht )
-		std::cout << *itr << std::endl;
-		
-		// print all doubles (second element)
-		for( auto itr = ht.begin<double,1>(); itr != ht.end<double,1>(); ++ht )
-		std::cout << *itr << std::endl;
+        hv.push_back<int>(2);
+        hv.push_back<double>(3.1415); // defaults to first double element
+        hv.push_back<double,0>(9); // specifically denote first double element
+        hv.push_back<std::string>( std::string("hello") );
+        hv.push_back<std::string>("world!"); // implicit conversion to std::string
+        
+        hv.size<int>; // 1
+        hv.size<double>; // 2 (defaults to first double element)
+        hv.size<double,1>; // 0
+        hv.size<std::string> // 2
+        
+        // print all integers
+        for( auto itr = ht.begin<int>(); itr != ht.end<int>(); ++ht )
+        std::cout << *itr << std::endl;
+        
+        // print all doubles (first element)
+        for( auto itr = ht.begin<double,0>(); itr != ht.end<double,0>(); ++ht )
+        std::cout << *itr << std::endl;
+        
+        // print all std::strings
+        for( auto itr = ht.begin<std::string,0>(); itr != ht.end<std::string,0>(); ++ht )
+        std::cout << *itr << std::endl;
+        
+        // print all doubles (second element)
+        for( auto itr = ht.begin<double,1>(); itr != ht.end<double,1>(); ++ht )
+        std::cout << *itr << std::endl;
 
 
 * **heterodeque.hpp**:
