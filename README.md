@@ -2,9 +2,9 @@
 
 ## Tested On
 * g++ 4.9.1 (MinGW-w64)
-* MS VC12 (Visual Studio 2013)
-* MS VC14 RC (Visual Studio 2015 RC)
-* clang 3.6.0
+* MS vc12 (Visual Studio 2013)
+* MS vc14 RC (Visual Studio 2015 RC)
+* LLVM clang 3.6.0
  
 
 ## Documentation
@@ -29,7 +29,7 @@
    sequence container types.
    
    Typical usage: Add template parameter to normal std::vector methods.
-
+   
 		heterogeneous:heterovector<int,double,std::string, double> hv;
 
 		hv.push_back<int>(2);
@@ -68,4 +68,3 @@
 
 ## Examples
 * examples directory contains source code with several use examples.
-  
