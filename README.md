@@ -22,16 +22,28 @@
    Type-erased type MUST implement a *get\<typename T\>()* function natively,
    or user must define it.
 
+* **heterodeque.hpp**:
+   Provides complete std::deque functionality with the ability to natively
+   hold elements of different types.  Each type is stored internally in its
+   own std::deque, so all operations maintain their inherent benefit over other
+   sequence container types.
+   
 * **heterovector.hpp**:
    Provides complete std::vector functionality with the ability to natively
    hold elements of different types.  Each type is stored internally in its
    own std::vector, so all operations maintain their inherent benefit over other
    sequence container types.
-   
-* **heterodeque.hpp**:
-   Provides complete std::deque functionality with the ability to natively
+
+* **heterostack.hpp**:
+   Provides complete std::stack functionality with the ability to natively
    hold elements of different types.  Each type is stored internally in its
-   own std::deque, so all operations maintain their inherent benefit over other
+   own std::stack, so all operations maintain their inherent benefit over other
+   sequence container types.
+   
+* **heteroqueue.hpp**:
+   Provides complete std::queue functionality with the ability to natively
+   hold elements of different types.  Each type is stored internally in its
+   own std::queue, so all operations maintain their inherent benefit over other
    sequence container types.
 
 Typical usage for all *heterocontainers*:
