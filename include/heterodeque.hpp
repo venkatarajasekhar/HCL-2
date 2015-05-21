@@ -206,7 +206,6 @@ namespace heterogeneous
             return next().gte(rhs.next());
         }
 
-    public:
         // Constructors & Destructors
         heterodeque() : container_(new container_type<value_type>), next_(nullptr), counter_(nullptr)
         {
@@ -364,7 +363,6 @@ namespace heterogeneous
             return next().template crend<U, N>();
         }
 
-    public:
         // Capacity
         /*!
         * \brief Returns the total number of elements in object.
@@ -1390,7 +1388,6 @@ namespace heterogeneous
             return *static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>();
         }
 
-    public:
         // Constructors & Destructors
         heterodeque() : container_(new container_type<value_type>), counter_(nullptr)
         {
@@ -1529,7 +1526,6 @@ namespace heterogeneous
             throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
         }
 
-    public:
         // Capacity
         /*!
         * \brief Returns the total number of elements in object.
