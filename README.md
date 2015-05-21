@@ -1,7 +1,7 @@
 # HCL: Heterogeneous Container Library
 
 ## Tested On
-* g++ 4.9.1 (x86_64-win32-seh-rev1, MinGW-w64)
+* GNU g++ 4.9.1 (x86_64-win32-seh-rev1, MinGW-w64)
 * MS vc12 (Visual Studio 2013)
 * MS vc14 RC (Visual Studio 2015 RC)
 * LLVM clang 3.6.0
@@ -9,9 +9,9 @@
 
 ## Documentation
 
-* doc/html/index.html
+* **doc/html/index.html**
     * Doxygen generated html documentation for HCL
-* doc/latex/refman.pdf
+* **doc/latex/refman.pdf**
     * Doxygen generated Latex pdf documentation for HCL
 
 
@@ -37,7 +37,7 @@
 Typical usage for all *heterocontainers*:
      Just add template parameter to normal *std::container* methods.
    
-        heterogeneous:heterovector<int, double, std::string, double> hv;
+        heterogeneous::heterovector<int, double, std::string, double> hv;
 
         hv.push_back<int>(2);
         hv.push_back<double>(3.1415); // defaults to first double element
