@@ -1,8 +1,8 @@
-#ifndef HETEROGENEOUS_HETEROVECTOR_HPP
-#define HETEROGENEOUS_HETEROVECTOR_HPP
+#ifndef HETEROGENEOUS_HETEROUECTOR_HPP
+#define HETEROGENEOUS_HETEROUECTOR_HPP
 
 /*
-* Distributed under the Boost Software License, Version 1.0.
+* Distributed under the Boost Software License, Uersion 1.0.
 * (See accompanying file LICENSE_1_0.txt or copy at
 * http://www.boost.org/LICENSE_1_0.txt)
 *
@@ -37,7 +37,7 @@ namespace heterogeneous
     {
         // Friends
         template<typename... Args> friend class heterovector;
-
+		
     public:
         // Typedefs
         typedef T value_type;
@@ -46,18 +46,21 @@ namespace heterogeneous
         using container_type = std::vector<U>;
 
         // Operators
-        heterovector<T, Types...>& operator=(const heterovector<T, Types...>& x)
+        /*!
+        * \brief Assigns contents of x into object.
+        */
+        heterovector<value_type, Types...>& operator=(const heterovector<value_type, Types...>& x)
         {
             setEQUALTO(x);
             return *this;
         }
 
     private:
-        void setEQUALTO(const heterovector<T, Types...>& x)
+        void setEQUALTO(const heterovector<value_type, Types...>& x)
         {
-            //copy contents of x into object
+            //copy contents of x to object
             if (container_ != nullptr) delete container_;
-            container_ = new container_type<T>(*static_cast< container_type<T>* >(x.container_) );
+            container_ = new container_type<value_type>(*static_cast< container_type<value_type>* >(x.container_) );
             next().setEQUALTO(x.next());
         }
 
@@ -74,138 +77,138 @@ namespace heterogeneous
         /*!
         * \brief Returns true if == operator evaluates to true for each element in object.
         */
-        bool operator==(const heterovector<T, Types...>& rhs)
+        bool operator==(const heterovector<value_type, Types...>& rhs)
         {
-            if (!(*static_cast< container_type<T>* >(container_) == *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) == *rhs.container<value_type, 0>())) return false;
             return next().operator==(rhs.next());
         }
 
         /*!
         * \brief Returns true if == operator evaluates to false for any element in object.
         */
-        bool operator!=(const heterovector<T, Types...>& rhs)
+        bool operator!=(const heterovector<value_type, Types...>& rhs)
         {
             return !operator==(rhs);
         }
-        
+
         /*!
         * \brief Returns true if < operator evaluates to true for each element in object.
         */
-        bool operator<(const heterovector<T, Types...>& rhs)
+        bool operator<(const heterovector<value_type, Types...>& rhs)
         {
-            if (!(*static_cast< container_type<T>* >(container_) < *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) < *rhs.container<value_type, 0>())) return false;
             return next().operator<(rhs.next());
         }
 
         /*!
         * \brief Returns true if > operator evaluates to true for each element in object.
         */
-        bool operator>(const heterovector<T, Types...>& rhs)
+        bool operator>(const heterovector<value_type, Types...>& rhs)
         {
-            if (!(*static_cast< container_type<T>* >(container_) > *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) > *rhs.container<value_type, 0>())) return false;
             return next().operator>(rhs.next());
         }
 
         /*!
         * \brief Returns true if <= operator evaluates to true for each element in object.
         */
-        bool operator<=(const heterovector<T, Types...>& rhs)
+        bool operator<=(const heterovector<value_type, Types...>& rhs)
         {
-            if (!(*static_cast< container_type<T>* >(container_) <= *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) <= *rhs.container<value_type, 0>())) return false;
             return next().operator<=(rhs.next());
         }
 
         /*!
         * \brief Returns true if >= operator evaluates to true for each element in object.
         */
-        bool operator>= (const heterovector<T, Types...>& rhs)
+        bool operator>= (const heterovector<value_type, Types...>& rhs)
         {
-            if (!(*static_cast< container_type<T>* >(container_) >= *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>())) return false;
             return next().operator>=(rhs.next());
         }
 
         /*!
         * \brief Same as operator==() but strictly enforces container element size matching.
         */
-        bool eq(const heterovector<T, Types...>& rhs)
+        bool eq(const heterovector<value_type, Types...>& rhs)
         {
             // number of elements must match
-            if (static_cast<container_type<T>*>(container_)->size() != rhs.container<T, 0>()->size()) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
 
             // Although this code is duplicated in operator==, we cannot call operator== here as a replacement.
             // The above test for matching number of elements must be checked recursively
-            if (!(*static_cast< container_type<T>* >(container_) == *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) == *rhs.container<value_type, 0>())) return false;
             return next().eq(rhs.next());
         }
 
         /*!
         * \brief Same as operator!=() but strictly enforces container element size matching.
         */
-        bool ne(const heterovector<T, Types...>& rhs)
+        bool ne(const heterovector<value_type, Types...>& rhs)
         {
             return !eq(rhs);
         }
-        
+
         /*!
         * \brief Same as operator<() but strictly enforces container element size matching.
         */
-        bool lt(const heterovector<T, Types...>& rhs)
+        bool lt(const heterovector<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be less than
-            if (static_cast<container_type<T>*>(container_)->size() == 0) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
 
             // number of elements must match
-            if (static_cast<container_type<T>*>(container_)->size() != rhs.container<T, 0>()->size()) return false;
-            if (!(*static_cast< container_type<T>* >(container_) < *rhs.container<T, 0>())) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) < *rhs.container<value_type, 0>())) return false;
             return next().lt(rhs.next());
         }
 
         /*!
         * \brief Same as operator>() but strictly enforces container element size matching.
         */
-        bool gt(const heterovector<T, Types...>& rhs)
+        bool gt(const heterovector<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be greater than
-            if (static_cast<container_type<T>*>(container_)->size() == 0) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
 
             // number of elements must match
-            if (static_cast<container_type<T>*>(container_)->size() != rhs.container<T, 0>()->size()) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
 
-            if (!(*static_cast< container_type<T>* >(container_) > *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) > *rhs.container<value_type, 0>())) return false;
             return next().gt(rhs.next());
         }
 
         /*!
         * \brief Same as operator<=() but strictly enforces container element size matching.
         */
-        bool lte(const heterovector<T, Types...>& rhs)
+        bool lte(const heterovector<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be less than, but can be equal!
 
             // number of elements must match
-            if (static_cast<container_type<T>*>(container_)->size() != rhs.container<T, 0>()->size()) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
 
-            if (!(*static_cast< container_type<T>* >(container_) <= *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) <= *rhs.container<value_type, 0>())) return false;
             return next().lte(rhs.next());
         }
 
         /*!
         * \brief Same as operator>=() but strictly enforces container element size matching.
         */
-        bool gte(const heterovector<T, Types...>& rhs)
+        bool gte(const heterovector<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be greater than, but can be equal!
 
             // number of elements must match
-            if (static_cast<container_type<T>*>(container_)->size() != rhs.container<T, 0>()->size()) return false;
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
 
-            if (!(*static_cast< container_type<T>* >(container_) >= *rhs.container<T, 0>())) return false;
+            if (!(*static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>())) return false;
             return next().gte(rhs.next());
-        }       
+        }
 
     public:
         // Constructors & Destructors
-        heterovector() : container_(new container_type<T>), next_(nullptr), counter_(nullptr)
+        heterovector() : container_(new container_type<value_type>), next_(nullptr), counter_(nullptr)
         {
             //First, call private constructor for all elements downstream (init list)
             //Private constructor does not allocate memory for counter_
@@ -222,7 +225,7 @@ namespace heterogeneous
         ~heterovector() {}; //counter_ is deallocated in heterovector<>
 
     private:
-        heterovector(size_t* pntr) : container_(new container_type<T>), next_(pntr), counter_(pntr)
+        heterovector(size_t* pntr) : container_(new container_type<value_type>), next_(pntr), counter_(pntr)
         { /*this constructor does not allocate memory for counter_*/ };
 
     public:
@@ -961,8 +964,13 @@ namespace heterogeneous
         {
             if (typeid(U) == typeid(value_type))
             {
-                static_cast< container_type<U>* >(container_)->insert(position, first, last);
-                return;
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast<container_type<U>*>(container_)->insert(position, first, last);
+                    return;
+                }
+                ++(*counter_);
             }
 
             return next().template insert<U, N>(position, first, last);
@@ -1052,7 +1060,7 @@ namespace heterogeneous
         /*!
         * \brief Swaps contents of object with x.
         */
-        void swap(heterovector<T, Types...>& x)
+        void swap(heterovector<value_type, Types...>& x)
         {
             void* temp = container_;
             container_ = x.container_;
@@ -1175,7 +1183,7 @@ namespace heterogeneous
                 ++(*counter_);
             }
 
-            return next().template setU, N>(il);
+            return next().template set<U, N>(il);
         }
 
         // Allocator
@@ -1224,272 +1232,1085 @@ namespace heterogeneous
     /*!
     * \cond Skip Doxygen documentation of this specialization.
     */
-    // Entire heterovector<> specialization marked private
-    template<> class heterovector<>
+	template<typename T>
+    class heterovector<T>
     {
         // Friends
         template<typename... Args> friend class heterovector;
 
-        template<typename T>
-        using container_type = std::vector <T>;
-
-        heterovector() : counter_(nullptr) {};
-
-        ~heterovector()
-        {
-            if (counter_ != nullptr) delete counter_;
-        }
-
-        heterovector(size_t* pntr) : counter_(nullptr) {};
-
-        // Operator Helpers
-        void setEQUALTO(const heterovector<>& x) {}
-
-        // Relational Methods
-        bool operator==(const heterovector<>& rhs)
-        { return true; }
-
-        bool operator<(const heterovector<>& rhs)
-        { return true; }
-        
-        bool operator>(const heterovector<>& rhs)
-        { return true; }
-
-        bool operator<=(const heterovector<>& rhs)
-        { return true; }
-        
-        bool operator>=(const heterovector<>& rhs)
-        { return  true; }
-
-        bool eq(const heterovector<>& rhs)
-        { return true; }
-        
-        bool lt(const heterovector<>& rhs)
-        { return true; }
-        
-        bool gt(const heterovector<>& rhs)
-        { return true; }
-        
-        bool lte(const heterovector<>& rhs)
-        { return true; }
-        
-        bool gte(const heterovector<>& rhs)
-        { return true; }
-        
-        // Iterators
-        template<typename U, size_t N = 0>
-        typename container_type<U>::iterator begin()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::iterator end()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::reverse_iterator rbegin()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::reverse_iterator rend()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::const_iterator cbegin()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::const_iterator cend()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::const_reverse_iterator crbegin()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        typename container_type<U>::const_reverse_iterator crend()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        // Capacity
-        template <typename U, size_t N = 0>
-        size_t size() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        size_t size() { return 0; }
-
-        void size(size_t& val) {}
-
-        template <typename U, size_t N = 0>
-        size_t max_size()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        void resize(size_t n)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        void resize(size_t n, const U& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        size_t capacity()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        bool empty()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        void reserve(size_t n)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        void shrink_to_fit() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U>
-        bool contains() { return false; }
-
-        template <typename U>
-        size_t multiplicity() { return 0; }
-
-        template <typename U>
-        void multiplicity(size_t& val) {}
-
-        // Element Access
-        template <typename U, size_t N = 0>
-        U& at(size_t n)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        const U& at(size_t n) const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        U& front()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        const U& front() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        U& back()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        const U& back() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        U* data()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        const U* data() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        container_type<U>* container()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <typename U, size_t N = 0>
-        const container_type<U>* container() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template <size_t N = 0>
-        std::type_index type()
-        { throw std::invalid_argument(std::string("N=") + std::to_string(N) + std::string(" elements do not exist in object.")); }
-
-        // Modifiers
-        template<typename U, size_t N = 0, typename InputIterator>
-        void assign(InputIterator first, InputIterator last)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void assign(size_t n, const U& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void assign(std::initializer_list<U> il)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void push_back(const U& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void push_back(U&& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void pop_back()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void insert(typename container_type<U>::const_iterator position, const U& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void insert(typename container_type<U>::const_iterator position, size_t n, const U& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0, typename InputIterator>
-        void insert(typename container_type<U>::const_iterator position, InputIterator first, InputIterator last)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void insert(typename container_type<U>::const_iterator position, U&& val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void insert(typename container_type<U>::const_iterator position, std::initializer_list<U> il)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void erase(typename container_type<U>::const_iterator position)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void erase(typename container_type<U>::const_iterator first, typename container_type<U>::const_iterator last)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        void swap(container_type<U>& x)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        void swap(heterovector<>& x) {}
-
-        template<typename U, size_t N = 0>
-        void clear()
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0, typename... Args>
-        void emplace(typename container_type<U>::const_iterator position, Args&&... val)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0, typename... Args>
-        void emplace_back(Args&&... args)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        container_type<U>& set(const container_type<U>& x)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
-
-        template<typename U, size_t N = 0>
-        container_type<U>& set(const container_type<U>&& x)
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
+    public:
+        // Typedefs
+        typedef T value_type;
 
         template<typename U>
+        using container_type = std::vector<U>;
+
+        // Operators
+        heterovector<value_type>& operator=(const heterovector<value_type>& x)
+        {
+            setEQUALTO(x);
+            return *this;
+        }
+
+    private:
+        void setEQUALTO(const heterovector<value_type>& x)
+        {
+            //copy contents of x into object
+            if (container_ != nullptr) delete container_;
+            container_ = new container_type<value_type>(*static_cast< container_type<value_type>* >(x.container_));
+        }
+
+    public:
+        // Relational Operators & Methods
+        // =========================================================================
+        // all operators need to be implemented using the containers native
+        // relational operators.  Defining relational operators based on one another
+        // does not produce expected results.
+        // std::vector uses lexographical comparison
+        // User must be aware of this as it may not produce expected result
+        // =========================================================================
+
+        /*!
+        * \brief Returns true if == operator evaluates to true for each element in object.
+        */
+        bool operator==(const heterovector<value_type>& rhs)
+        {
+            return *static_cast< container_type<value_type>* >(container_) == *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Returns true if == operator evaluates to false for any element in object.
+        */
+        bool operator!=(const heterovector<value_type>& rhs)
+        {
+            return !operator==(rhs);
+        }
+
+        /*!
+        * \brief Returns true if < operator evaluates to true for each element in object.
+        */
+        bool operator<(const heterovector<value_type>& rhs)
+        {
+            return *static_cast< container_type<value_type>* >(container_) < *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Returns true if > operator evaluates to true for each element in object.
+        */
+        bool operator>(const heterovector<value_type>& rhs)
+        {
+            return *static_cast< container_type<value_type>* >(container_) > *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Returns true if <= operator evaluates to true for each element in object.
+        */
+        bool operator<=(const heterovector<value_type>& rhs)
+        {
+            return *static_cast< container_type<value_type>* >(container_) <= *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Returns true if >= operator evaluates to true for each element in object.
+        */
+        bool operator>= (const heterovector<value_type>& rhs)
+        {
+            return *static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Same as operator==() but strictly enforces container element size matching.
+        */
+        bool eq(const heterovector<value_type>& rhs)
+        {
+            // number of elements must match
+            if ( static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size() ) return false;
+            return *static_cast< container_type<value_type>* >(container_) == *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Same as operator!=() but strictly enforces container element size matching.
+        */
+        bool ne(const heterovector<value_type>& rhs)
+        {
+            return !eq(rhs);
+        }
+
+        /*!
+        * \brief Same as operator<() but strictly enforces container element size matching.
+        */
+        bool lt(const heterovector<value_type>& rhs)
+        {
+            // if zero elements, cannot be less than
+            if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
+
+            // number of elements must match
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
+            return *static_cast< container_type<value_type>* >(container_) < *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Same as operator>() but strictly enforces container element size matching.
+        */
+        bool gt(const heterovector<value_type>& rhs)
+        {
+            // if zero elements, cannot be greater than
+            if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
+
+            // number of elements must match
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
+            return *static_cast< container_type<value_type>* >(container_) > *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Same as operator<=() but strictly enforces container element size matching.
+        */
+        bool lte(const heterovector<value_type>& rhs)
+        {
+            // if zero elements, cannot be less than, but can be equal!
+
+            // number of elements must match
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
+            return *static_cast< container_type<value_type>* >(container_) <= *rhs.container<value_type, 0>();
+        }
+
+        /*!
+        * \brief Same as operator>=() but strictly enforces container element size matching.
+        */
+        bool gte(const heterovector<value_type>& rhs)
+        {
+            // if zero elements, cannot be greater than, but can be equal!
+
+            // number of elements must match
+            if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
+            return *static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>();
+        }
+
+    public:
+        // Constructors & Destructors
+        heterovector() : container_(new container_type<value_type>), counter_(nullptr)
+        {
+            counter_ = new size_t;
+            *counter_ = 0;
+        };
+
+        ~heterovector()
+		{
+			if( counter_ != nullptr ) delete counter_;
+		};
+
+    private:
+        heterovector(size_t* pntr) : container_(new container_type<value_type>), counter_(pntr)
+        { /*this constructor does not allocate memory for counter_*/ };
+
+    public:
+        // Iterators
+        template <typename U, size_t N = 0>
+        typename container_type<U>::iterator begin()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->begin();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::iterator end()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->end();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::reverse_iterator rbegin()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->rbegin();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::reverse_iterator rend()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->rend();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::const_iterator cbegin()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->cbegin();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::const_iterator cend()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->cend();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::const_reverse_iterator crbegin()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->crbegin();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        template <typename U, size_t N = 0>
+        typename container_type<U>::const_reverse_iterator crend()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->crend();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+    public:
+        // Capacity
+        /*!
+        * \brief Returns the total number of elements in object.
+        */
+        size_t size() { return 1; }
+
+    private:
+        void size(size_t& val) { ++val; }
+
+    public:
+        /*!
+        * \brief Returns number of elements for the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        size_t size() const
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->size();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns the maximum number of elements the Nth container of type U can hold.
+        */
+        template <typename U, size_t N = 0>
+        size_t max_size()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->max_size();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Resizes the Nth container of type U so that it contains at least n elements.
+        */
+        template <typename U, size_t N = 0>
+        void resize(size_t n)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->resize(n);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Resizes the Nth container of type U so that it contains at least n elements.
+        */
+        template <typename U, size_t N = 0>
+        void resize(size_t n, const U& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->resize(n, val);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns the number of elements the Nth container of type U can store before reallocation.
+        */
+        template <typename U, size_t N = 0>
+        size_t capacity()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->capacity();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Resizes whether the Nth container of type U is empty.
+        */
+        template <typename U, size_t N = 0>
+        bool empty()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->empty();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Requests the capacity of Nth container of type U is enough to contain at least n elements.
+        */
+        template <typename U, size_t N = 0>
+        void reserve(size_t n)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->reserve(n);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Resizes the Nth container of type U reduce its capacity to fit its size.
+        */
+        template <typename U, size_t N = 0>
+        void shrink_to_fit()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->shrink_to_fit();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns whether object stores type U.
+        */
+        template <typename U>
+        bool contains()
+        {
+            return ( typeid(U) == typeid(value_type) );
+        }
+
+        /*!
+        * \brief Returns the number of containers with type U.
+        */
+        template <typename U>
+        size_t multiplicity()
+        {
+            return (typeid(U) == typeid(value_type)) ? 1 : 0;
+        }
+
+    private:
+        template <typename U>
+        void multiplicity(size_t& val)
+        {
+            if (typeid(U) == typeid(value_type)) ++val;
+        }
+
+     public:
+        // Element Access
+        /*!
+        * \brief Returns reference to the nth element of the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        U& at(size_t n)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->at(n);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns const reference to the nth element of the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        const U& at(size_t n) const
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->at(n);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns reference to the first element of the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        U& front()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->front();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns const reference to the first element of the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        const U& front() const
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->front();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns reference to the last element of the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        U& back()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->back();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns const reference to the last element of the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        const U& back() const
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->back();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns pointer to the data contained in the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        U* data()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->data();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns const pointer to the data contained in the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        const U* data() const
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->data();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns reference to the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        container_type<U>* container()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns const reference to the Nth container of type U.
+        */
+        template <typename U, size_t N = 0>
+        const container_type<U>* container() const
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< const container_type<U>* >(container_);
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Returns std::type_index of items within the Nth container in object.
+        */
+        template <size_t N = 0>
+        std::type_index type()
+        {
+            if (*counter_ == N)
+            {
+                *counter_ = 0;
+                return std::type_index(typeid(value_type));
+            }
+            *counter_ = 0;
+
+            throw std::out_of_range(std::string("Element N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        // Modifiers
+        /*!
+        * \brief Assigns new contents to the Nth container of type U, replacing its current contents, and modifying its size accordingly.
+        */
+        template<typename U, size_t N = 0, typename InputIterator>
+        void assign(InputIterator first, InputIterator last)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                static_cast< container_type<U>* >(container_)->assign(first, last);
+                return;
+            }
+
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Assigns new contents to the Nth container of type U, replacing its current contents, and modifying its size accordingly.
+        */
+        template<typename U, size_t N = 0>
+        void assign(size_t n, const U& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->assign(n, val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Assigns new contents to the Nth container of type U, replacing its current contents, and modifying its size accordingly.
+        */
+        template<typename U, size_t N = 0>
+        void assign(std::initializer_list<U> il)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->assign(il);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Adds val as the last element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0, typename V>
+        void push_back(const V& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->push_back(val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Adds val as the last element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0, typename V>
+        void push_back(V&& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->push_back(val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Removes the last element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0>
+        void pop_back()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->pop_back();
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Inserts val into the Nth container of type U at the location specified by position.
+        */
+        template<typename U, size_t N = 0>
+        void insert(typename container_type<U>::const_iterator position, const U& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->insert(position, val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Inserts val into the Nth container of type U at the location specified by position.
+        */
+        template<typename U, size_t N = 0>
+        void insert(typename container_type<U>::const_iterator position, U&& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->insert(position, val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Inserts n copies of val into the Nth container of type U, starting at the location specified by position.
+        */
+        template<typename U, size_t N = 0>
+        void insert(typename container_type<U>::const_iterator position, size_t n, const U& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->insert(position, n, val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Inserts copies of the values between [first,last) into the Nth container of type U, starting at the location specified by position.
+        */
+        template<typename U, size_t N = 0, typename InputIterator>
+        void insert(typename container_type<U>::const_iterator position, InputIterator first, InputIterator last)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast<container_type<U>*>(container_)->insert(position, first, last);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Inserts il into the Nth container of type U, starting at the location specified by position.
+        */
+        template<typename U, size_t N = 0>
+        void insert(typename container_type<U>::const_iterator position, std::initializer_list<U> il)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->insert(position, il);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Removes the element specified by position in the Nth container of type U.
+        */
+        template<typename U, size_t N = 0>
+        void erase(typename container_type<U>::const_iterator position)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->erase(position);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Removes the range of elements between locations specified by first and last in the Nth container of type U.
+        */
+        template<typename U, size_t N = 0>
+        void erase(typename container_type<U>::const_iterator first, typename container_type<U>::const_iterator last)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->erase(first, last);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Swaps the contents of the Nth container of type U with that of x.
+        */
+        template<typename U, size_t N = 0>
+        void swap(container_type<U>& x)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->swap(x);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Swaps contents of object with x.
+        */
+        void swap(heterovector<T>& x)
+        {
+            void* temp = container_;
+            container_ = x.container_;
+            x.container_ = temp;
+        }
+
+        /*!
+        * \brief Erases the of contents the Nth container of type U.
+        */
+        template<typename U, size_t N = 0>
+        void clear()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->clear();
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief The Nth container of type U is extended by inserting a new element at position.
+        */
+        template<typename U, size_t N = 0, typename... Args>
+        void emplace(typename container_type<U>::const_iterator position, Args&&... args)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->emplace(position, args...);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief The Nth container of type U is extended by inserting a new element after its current last element.
+        */
+        template<typename U, size_t N = 0, typename... Args>
+        void emplace_back(Args&&... args)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast<container_type<U>*>(container_)->emplace_back(args...);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Sets the contents of the Nth container of type U to those in x.
+        */
+        template<typename U, size_t N = 0>
+        container_type<U>& set(const container_type<U>& x)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return *static_cast< container_type<U>* >(container_) = x;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));;
+        }
+
+        /*!
+        * \brief Sets the contents of the Nth container of type U to those in x.
+        */
+        template<typename U, size_t N = 0>
+        container_type<U>& set(container_type<U>&& x)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N) // check to see if we are at the Nth container of type U
+                {
+                    *counter_ = 0; // if so, reset counter to zero to get ready for next request
+                    return *static_cast< container_type<U>* >(container_) = x;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Sets the contents of the Nth container of type U to il.
+        */
+        template<typename U, size_t N = 0>
         container_type<U>& set(std::initializer_list<U> il)
-        { throw std::invalid_argument(std::string("Type ") + std::string(" does not exist in object.")); }
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return *static_cast< container_type<U>* >(container_) = il;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
 
         // Allocator
+        /*!
+        * \brief Returns a copy of the allocator object associated with the Nth container of type U.
+        */
         template<typename U, size_t N = 0>
         typename container_type<U>::allocator_type get_allocator() const
-        { throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object.")); }
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    return static_cast< container_type<U>* >(container_)->get_allocator();
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
 
+    private:
+        void* container_; //pointer to container_type<value_type>
         size_t* counter_;
 
+        // Helper Methods
         void setcounter(size_t*& pntr)
         {
             counter_ = pntr;
@@ -1498,6 +2319,7 @@ namespace heterogeneous
     /*!
     * \endcond
     */
+
 
     template<typename... Args_lhs, typename... Args_rhs>
     bool operator==(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
@@ -1536,4 +2358,4 @@ namespace heterogeneous
     }
 }
 
-#endif // HETEROGENEOUS_HETEROVECTOR_HPP
+#endif // HETEROGENEOUS_HETEROUECTOR_HPP
