@@ -22,28 +22,34 @@
    Type-erased type MUST implement a *get\<typename T\>()* function natively,
    or user must define it.
 
-
 * **heterovector.hpp**:
    Provides complete std::vector functionality with the ability to natively
    hold elements of different types.  Each type is stored internally in its
    own std::vector, so all operations maintain their inherent benefit over other
    sequence container types.
    
-   Typical usage for all heterocontainers:
-     Add template parameter to normal std::*container* methods.
+* **heterodeque.hpp**:
+   Provides complete std::deque functionality with the ability to natively
+   hold elements of different types.  Each type is stored internally in its
+   own std::deque, so all operations maintain their inherent benefit over other
+   sequence container types.
+
+Typical usage for all *heterocontainers*:
+     Just add template parameter to normal *std::container* methods.
    
         heterogeneous:heterovector<int, double, std::string, double> hv;
 
         hv.push_back<int>(2);
         hv.push_back<double>(3.1415); // defaults to first double element
         hv.push_back<double,0>(9); // specifically denote first double element
-        hv.push_back<std::string>( std::string("hello") );
+        hv.push_back<std::string>( std::string("hello ") );
         hv.push_back<std::string>("world!"); // implicit conversion to std::string
         
         hv.size<int>; // 1
         hv.size<double>; // 2 (defaults to first double element)
         hv.size<double,1>; // 0
         hv.size<std::string> // 2
+		hv.size() // 4, number of elements of heterovector (int, double, std::string, double)
         
         // print all integers
         for( auto itr = ht.begin<int>(); itr != ht.end<int>(); ++ht )
@@ -60,13 +66,6 @@
         // print all doubles (second element)
         for( auto itr = ht.begin<double,1>(); itr != ht.end<double,1>(); ++ht )
         std::cout << *itr << std::endl;
-
-
-* **heterodeque.hpp**:
-   Provides complete std::deque functionality with the ability to natively
-   hold elements of different types.  Each type is stored internally in its
-   own std::deque, so all operations maintain their inherent benefit over other
-   sequence container types.
 
 
 ## Examples
