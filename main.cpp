@@ -1,18 +1,18 @@
-#include <vector>
+#include <deque>
 #include <string>
 #include <iostream>
 
-#include "heterovector.hpp"
+#include "heterodeque.hpp"
 
 int main()
 {
     try
     {
         //currently, only default constructor implemented
-        heterogeneous::heterovector<int, double, std::string, int, int, double, std::string> hv;
+        heterogeneous::heterodeque<int, double, std::string, int, int, double, std::string> hv;
 
-        //direct insertion of doubles and std::strings into heterovector
-        hv.reserve<double>(3);
+        //direct insertion of doubles and std::strings into heterodeque
+        //hv.reserve<double>(3);
         hv.push_back<double>(4.3);
         hv.push_back<std::string,0>("one");
         hv.push_back<std::string,0>(std::string("two"));
@@ -23,13 +23,13 @@ int main()
         hv.push_back<double>(99.999);
         //hv.push_back(1.2f); //exception: type float does not exist in hv
 
-        //create an std::vector of ints
-        std::vector<int> i;
+        //create an std::deque of ints
+        std::deque<int> i;
         i.push_back(9);
         i.push_back(3);
         i.push_back(1);
 
-        //assignment of std::vector<int> to heterovector
+        //assignment of std::deque<int> to heterodeque
         hv.set<int,1>(i); //sets second element of ints to i
         hv.resize<int>(4, 35); //add 4th value of 35, default to first int element
         hv.insert<int>(hv.begin<int,0>(), std::initializer_list < int > {0, 0}); //inserts two 0s at beginning of first int element
@@ -41,7 +41,7 @@ int main()
         std::cout << hv.front<std::string>() << std::endl; //first std::string
         std::cout << hv.back<double>() << std::endl; //last double
         std::cout << hv.at<double>(0) << std::endl; //first double
-        std::cout << *hv.data<double>() << std::endl; //first double
+        //std::cout << *hv.data<double>() << std::endl; //first double
         std::cout << std::endl;
 
         //iterate over ints
@@ -90,15 +90,15 @@ int main()
         std::cout << std::endl;
 
 
-        //get info about various types in heterovector
+        //get info about various types in heterodeque
         std::cout << hv.size<int,0>() << std::endl;
         std::cout << hv.size<int,1>() << std::endl;
         std::cout << hv.size<int,2>() << std::endl;
         //std::cout << hv.size<int,3>() << std::endl;  //exception, fouth element of type int doesn't exist
         std::cout << hv.size<double>() << std::endl;
         std::cout << hv.size<std::string>() << std::endl;
-        std::cout << hv.size() << " total number of type elements in heterovector" << std::endl;
-        std::cout << hv.type<2>().name() << " type of third element in heterovector" << std::endl;
+        std::cout << hv.size() << " total number of type elements in heterodeque" << std::endl;
+        std::cout << hv.type<2>().name() << " type of third element in heterodeque" << std::endl;
         std::cout << std::endl;
 
         //return type multiplicity
@@ -108,7 +108,7 @@ int main()
         std::cout << hv.multiplicity<std::string>() << " double multiplicity" << std::endl;
         std::cout << std::endl;
 
-        // check whether heterovector contains type
+        // check whether heterodeque contains type
         std::cout << hv.contains<double>() << std::endl;
         std::cout << hv.contains<float>() << std::endl;
         std::cout << hv.contains<std::string>() << std::endl;

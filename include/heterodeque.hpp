@@ -1,5 +1,5 @@
-#ifndef HETEROGENEOUS_HETEROVECTOR_HPP
-#define HETEROGENEOUS_HETEROVECTOR_HPP
+#ifndef HETEROGENEOUS_HETERODEQUE_HPP
+#define HETEROGENEOUS_HETERODEQUE_HPP
 
 /*
 * Distributed under the Boost Software License, Version 1.0.
@@ -10,16 +10,16 @@
 */
 
 /*!
-* \file heterovector.hpp
+* \file heterodeque.hpp
 *
-* This templated class replicates the features of an std::vector
+* This templated class replicates the features of an std::deque
 * that can handle heterogeneous data types.
 */
 
 #include <stdexcept>
 #include <typeinfo>
 #include <typeindex>
-#include <vector>
+#include <deque>
 #include <string>
 
 namespace heterogeneous
@@ -27,36 +27,36 @@ namespace heterogeneous
     /*!
     * \cond Skip Doxygen documentation of this forward declaration.
     */
-    template<typename... Types> class heterovector;
+    template<typename... Types> class heterodeque;
     /*!
     * \endcond
     */
 
     template<typename T, typename... Types>
-    class heterovector<T, Types...>
+    class heterodeque<T, Types...>
     {
         // Friends
-        template<typename... Args> friend class heterovector;
+        template<typename... Args> friend class heterodeque;
 		
     public:
         // Typedefs
         typedef T value_type;
 
         template<typename U>
-        using container_type = std::vector<U>;
+        using container_type = std::deque<U>;
 
         // Operators
         /*!
         * \brief Assigns contents of rhs into object.
         */
-        heterovector<value_type, Types...>& operator=(const heterovector<value_type, Types...>& rhs)
+        heterodeque<value_type, Types...>& operator=(const heterodeque<value_type, Types...>& rhs)
         {
             setEQUALTO(rhs);
             return *this;
         }
 
     private:
-        void setEQUALTO(const heterovector<value_type, Types...>& x)
+        void setEQUALTO(const heterodeque<value_type, Types...>& x)
         {
             //copy contents of x to object
             if (container_ != nullptr) delete container_;
@@ -70,14 +70,14 @@ namespace heterogeneous
         // all operators need to be implemented using the containers native
         // relational operators.  Defining relational operators based on one another
         // does not produce expected results.
-        // std::vector uses lexographical comparison
+        // std::deque uses lexographical comparison
         // User must be aware of this as it may not produce expected result
         // =========================================================================
 
         /*!
         * \brief Returns true if == operator evaluates to true for each element in object.
         */
-        bool operator==(const heterovector<value_type, Types...>& rhs)
+        bool operator==(const heterodeque<value_type, Types...>& rhs)
         {
             if (!(*static_cast< container_type<value_type>* >(container_) == *rhs.container<value_type, 0>())) return false;
             return next().operator==(rhs.next());
@@ -86,7 +86,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if == operator evaluates to false for any element in object.
         */
-        bool operator!=(const heterovector<value_type, Types...>& rhs)
+        bool operator!=(const heterodeque<value_type, Types...>& rhs)
         {
             return !operator==(rhs);
         }
@@ -94,7 +94,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if < operator evaluates to true for each element in object.
         */
-        bool operator<(const heterovector<value_type, Types...>& rhs)
+        bool operator<(const heterodeque<value_type, Types...>& rhs)
         {
             if (!(*static_cast< container_type<value_type>* >(container_) < *rhs.container<value_type, 0>())) return false;
             return next().operator<(rhs.next());
@@ -103,7 +103,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if > operator evaluates to true for each element in object.
         */
-        bool operator>(const heterovector<value_type, Types...>& rhs)
+        bool operator>(const heterodeque<value_type, Types...>& rhs)
         {
             if (!(*static_cast< container_type<value_type>* >(container_) > *rhs.container<value_type, 0>())) return false;
             return next().operator>(rhs.next());
@@ -112,7 +112,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if <= operator evaluates to true for each element in object.
         */
-        bool operator<=(const heterovector<value_type, Types...>& rhs)
+        bool operator<=(const heterodeque<value_type, Types...>& rhs)
         {
             if (!(*static_cast< container_type<value_type>* >(container_) <= *rhs.container<value_type, 0>())) return false;
             return next().operator<=(rhs.next());
@@ -121,7 +121,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if >= operator evaluates to true for each element in object.
         */
-        bool operator>= (const heterovector<value_type, Types...>& rhs)
+        bool operator>= (const heterodeque<value_type, Types...>& rhs)
         {
             if (!(*static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>())) return false;
             return next().operator>=(rhs.next());
@@ -130,7 +130,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator==() but strictly enforces container element size matching.
         */
-        bool eq(const heterovector<value_type, Types...>& rhs)
+        bool eq(const heterodeque<value_type, Types...>& rhs)
         {
             // number of elements must match
             if (static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size()) return false;
@@ -144,7 +144,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator!=() but strictly enforces container element size matching.
         */
-        bool ne(const heterovector<value_type, Types...>& rhs)
+        bool ne(const heterodeque<value_type, Types...>& rhs)
         {
             return !eq(rhs);
         }
@@ -152,7 +152,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator<() but strictly enforces container element size matching.
         */
-        bool lt(const heterovector<value_type, Types...>& rhs)
+        bool lt(const heterodeque<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be less than
             if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
@@ -166,7 +166,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator>() but strictly enforces container element size matching.
         */
-        bool gt(const heterovector<value_type, Types...>& rhs)
+        bool gt(const heterodeque<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be greater than
             if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
@@ -181,7 +181,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator<=() but strictly enforces container element size matching.
         */
-        bool lte(const heterovector<value_type, Types...>& rhs)
+        bool lte(const heterodeque<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be less than, but can be equal!
 
@@ -195,7 +195,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator>=() but strictly enforces container element size matching.
         */
-        bool gte(const heterovector<value_type, Types...>& rhs)
+        bool gte(const heterodeque<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be greater than, but can be equal!
 
@@ -208,7 +208,7 @@ namespace heterogeneous
 
     public:
         // Constructors & Destructors
-        heterovector() : container_(new container_type<value_type>), next_(nullptr), counter_(nullptr)
+        heterodeque() : container_(new container_type<value_type>), next_(nullptr), counter_(nullptr)
         {
             //First, call private constructor for all elements downstream (init list)
             //Private constructor does not allocate memory for counter_
@@ -222,10 +222,10 @@ namespace heterogeneous
             next().setcounter(counter_);
         };
 
-        ~heterovector() {}; //counter_ is deallocated in heterovector<>
+        ~heterodeque() {}; //counter_ is deallocated in heterodeque<>
 
     private:
-        heterovector(size_t* pntr) : container_(new container_type<value_type>), next_(pntr), counter_(pntr)
+        heterodeque(size_t* pntr) : container_(new container_type<value_type>), next_(pntr), counter_(pntr)
         { /*this constructor does not allocate memory for counter_*/ };
 
     public:
@@ -461,25 +461,6 @@ namespace heterogeneous
         }
 
         /*!
-        * \brief Returns the number of elements the Nth container of type U can store before reallocation.
-        */
-        template <typename U, size_t N = 0>
-        size_t capacity()
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->capacity();
-                }
-                ++(*counter_);
-            }
-
-            return next().template capacity<U, N>();
-        }
-
-        /*!
         * \brief Resizes whether the Nth container of type U is empty.
         */
         template <typename U, size_t N = 0>
@@ -496,25 +477,6 @@ namespace heterogeneous
             }
 
             return next().template empty<U, N>();
-        }
-
-        /*!
-        * \brief Requests the capacity of Nth container of type U is enough to contain at least n elements.
-        */
-        template <typename U, size_t N = 0>
-        void reserve(size_t n)
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->reserve(n);
-                }
-                ++(*counter_);
-            }
-
-            return next().template reserve<U, N>(n);
         }
 
         /*!
@@ -688,44 +650,6 @@ namespace heterogeneous
         }
 
         /*!
-        * \brief Returns pointer to the data contained in the Nth container of type U.
-        */
-        template <typename U, size_t N = 0>
-        U* data()
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->data();
-                }
-                ++(*counter_);
-            }
-
-            return next().template data<U, N>();
-        }
-
-        /*!
-        * \brief Returns const pointer to the data contained in the Nth container of type U.
-        */
-        template <typename U, size_t N = 0>
-        const U* data() const
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->data();
-                }
-                ++(*counter_);
-            }
-
-            return next().template data<U, N>();
-        }
-
-        /*!
         * \brief Returns reference to the Nth container of type U.
         */
         template <typename U, size_t N = 0>
@@ -877,6 +801,46 @@ namespace heterogeneous
         }
 
         /*!
+        * \brief Adds val as the first element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0, typename V>
+        void push_front(const V& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->push_front(val);
+                    return;
+                }
+                ++(*counter_);
+            }
+
+            return next().template push_front<U, N>(val);
+        }
+
+        /*!
+        * \brief Adds val as the first element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0, typename V>
+        void push_front(V&& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->push_front(val);
+                    return;
+                }
+                ++(*counter_);
+            }
+
+            return next().template push_front<U, N>(val);
+        }
+
+        /*!
         * \brief Removes the last element of the Nth container of type U.
         */
         template<typename U, size_t N = 0>
@@ -894,6 +858,26 @@ namespace heterogeneous
             }
 
             return next().template pop_back<U, N>();
+        }
+
+        /*!
+        * \brief Removes the last element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0>
+        void pop_front()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->pop_front();
+                    return;
+                }
+                ++(*counter_);
+            }
+
+            return next().template pop_front<U, N>();
         }
 
         /*!
@@ -1060,7 +1044,7 @@ namespace heterogeneous
         /*!
         * \brief Swaps contents of object with x.
         */
-        void swap(heterovector<value_type, Types...>& x)
+        void swap(heterodeque<value_type, Types...>& x)
         {
             void* temp = container_;
             container_ = x.container_;
@@ -1107,6 +1091,26 @@ namespace heterogeneous
             }
 
             next().template emplace<U, N>(position, args...);
+        }
+
+        /*!
+        * \brief The Nth container of type U is extended by inserting a new element before its current first element.
+        */
+        template<typename U, size_t N = 0, typename... Args>
+        void emplace_front(Args&&... args)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast<container_type<U>*>(container_)->emplace_front(args...);
+                    return;
+                }
+                ++(*counter_);
+            }
+
+            next().template emplace_front<U, N>(args...);
         }
 
         /*!
@@ -1208,16 +1212,16 @@ namespace heterogeneous
 
     private:
         void* container_; //pointer to container_type<value_type>
-        heterovector<Types...> next_;
+        heterodeque<Types...> next_;
         size_t* counter_;
 
         // Helper Methods
-        heterovector<Types...>& next()
+        heterodeque<Types...>& next()
         {
             return next_;
         }
 
-        const heterovector<Types...>& next() const
+        const heterodeque<Types...>& next() const
         {
             return next_;
         }
@@ -1233,27 +1237,27 @@ namespace heterogeneous
     * \cond Skip Doxygen documentation of this specialization.
     */
 	template<typename T>
-    class heterovector<T>
+    class heterodeque<T>
     {
         // Friends
-        template<typename... Args> friend class heterovector;
+        template<typename... Args> friend class heterodeque;
 
     public:
         // Typedefs
         typedef T value_type;
 
         template<typename U>
-        using container_type = std::vector<U>;
+        using container_type = std::deque<U>;
 
         // Operators
-        heterovector<value_type>& operator=(const heterovector<value_type>& x)
+        heterodeque<value_type>& operator=(const heterodeque<value_type>& x)
         {
             setEQUALTO(x);
             return *this;
         }
 
     private:
-        void setEQUALTO(const heterovector<value_type>& x)
+        void setEQUALTO(const heterodeque<value_type>& x)
         {
             //copy contents of x into object
             if (container_ != nullptr) delete container_;
@@ -1266,14 +1270,14 @@ namespace heterogeneous
         // all operators need to be implemented using the containers native
         // relational operators.  Defining relational operators based on one another
         // does not produce expected results.
-        // std::vector uses lexographical comparison
+        // std::deque uses lexographical comparison
         // User must be aware of this as it may not produce expected result
         // =========================================================================
 
         /*!
         * \brief Returns true if == operator evaluates to true for each element in object.
         */
-        bool operator==(const heterovector<value_type>& rhs)
+        bool operator==(const heterodeque<value_type>& rhs)
         {
             return *static_cast< container_type<value_type>* >(container_) == *rhs.container<value_type, 0>();
         }
@@ -1281,7 +1285,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if == operator evaluates to false for any element in object.
         */
-        bool operator!=(const heterovector<value_type>& rhs)
+        bool operator!=(const heterodeque<value_type>& rhs)
         {
             return !operator==(rhs);
         }
@@ -1289,7 +1293,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if < operator evaluates to true for each element in object.
         */
-        bool operator<(const heterovector<value_type>& rhs)
+        bool operator<(const heterodeque<value_type>& rhs)
         {
             return *static_cast< container_type<value_type>* >(container_) < *rhs.container<value_type, 0>();
         }
@@ -1297,7 +1301,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if > operator evaluates to true for each element in object.
         */
-        bool operator>(const heterovector<value_type>& rhs)
+        bool operator>(const heterodeque<value_type>& rhs)
         {
             return *static_cast< container_type<value_type>* >(container_) > *rhs.container<value_type, 0>();
         }
@@ -1305,7 +1309,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if <= operator evaluates to true for each element in object.
         */
-        bool operator<=(const heterovector<value_type>& rhs)
+        bool operator<=(const heterodeque<value_type>& rhs)
         {
             return *static_cast< container_type<value_type>* >(container_) <= *rhs.container<value_type, 0>();
         }
@@ -1313,7 +1317,7 @@ namespace heterogeneous
         /*!
         * \brief Returns true if >= operator evaluates to true for each element in object.
         */
-        bool operator>= (const heterovector<value_type>& rhs)
+        bool operator>= (const heterodeque<value_type>& rhs)
         {
             return *static_cast< container_type<value_type>* >(container_) >= *rhs.container<value_type, 0>();
         }
@@ -1321,7 +1325,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator==() but strictly enforces container element size matching.
         */
-        bool eq(const heterovector<value_type>& rhs)
+        bool eq(const heterodeque<value_type>& rhs)
         {
             // number of elements must match
             if ( static_cast<container_type<value_type>*>(container_)->size() != rhs.container<value_type, 0>()->size() ) return false;
@@ -1331,7 +1335,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator!=() but strictly enforces container element size matching.
         */
-        bool ne(const heterovector<value_type>& rhs)
+        bool ne(const heterodeque<value_type>& rhs)
         {
             return !eq(rhs);
         }
@@ -1339,7 +1343,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator<() but strictly enforces container element size matching.
         */
-        bool lt(const heterovector<value_type>& rhs)
+        bool lt(const heterodeque<value_type>& rhs)
         {
             // if zero elements, cannot be less than
             if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
@@ -1352,7 +1356,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator>() but strictly enforces container element size matching.
         */
-        bool gt(const heterovector<value_type>& rhs)
+        bool gt(const heterodeque<value_type>& rhs)
         {
             // if zero elements, cannot be greater than
             if (static_cast<container_type<value_type>*>(container_)->size() == 0) return false;
@@ -1365,7 +1369,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator<=() but strictly enforces container element size matching.
         */
-        bool lte(const heterovector<value_type>& rhs)
+        bool lte(const heterodeque<value_type>& rhs)
         {
             // if zero elements, cannot be less than, but can be equal!
 
@@ -1377,7 +1381,7 @@ namespace heterogeneous
         /*!
         * \brief Same as operator>=() but strictly enforces container element size matching.
         */
-        bool gte(const heterovector<value_type>& rhs)
+        bool gte(const heterodeque<value_type>& rhs)
         {
             // if zero elements, cannot be greater than, but can be equal!
 
@@ -1388,19 +1392,19 @@ namespace heterogeneous
 
     public:
         // Constructors & Destructors
-        heterovector() : container_(new container_type<value_type>), counter_(nullptr)
+        heterodeque() : container_(new container_type<value_type>), counter_(nullptr)
         {
             counter_ = new size_t;
             *counter_ = 0;
         };
 
-        ~heterovector()
+        ~heterodeque()
 		{
 			if( counter_ != nullptr ) delete counter_;
 		};
 
     private:
-        heterovector(size_t* pntr) : container_(new container_type<value_type>), counter_(pntr)
+        heterodeque(size_t* pntr) : container_(new container_type<value_type>), counter_(pntr)
         { /*this constructor does not allocate memory for counter_*/ };
 
     public:
@@ -1609,24 +1613,6 @@ namespace heterogeneous
         }
 
         /*!
-        * \brief Returns the number of elements the Nth container of type U can store before reallocation.
-        */
-        template <typename U, size_t N = 0>
-        size_t capacity()
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->capacity();
-                }
-            }
-            *counter_ = 0;
-            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
-        }
-
-        /*!
         * \brief Resizes whether the Nth container of type U is empty.
         */
         template <typename U, size_t N = 0>
@@ -1638,24 +1624,6 @@ namespace heterogeneous
                 {
                     *counter_ = 0;
                     return static_cast< container_type<U>* >(container_)->empty();
-                }
-            }
-            *counter_ = 0;
-            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
-        }
-
-        /*!
-        * \brief Requests the capacity of Nth container of type U is enough to contain at least n elements.
-        */
-        template <typename U, size_t N = 0>
-        void reserve(size_t n)
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->reserve(n);
                 }
             }
             *counter_ = 0;
@@ -1816,42 +1784,6 @@ namespace heterogeneous
         }
 
         /*!
-        * \brief Returns pointer to the data contained in the Nth container of type U.
-        */
-        template <typename U, size_t N = 0>
-        U* data()
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->data();
-                }
-            }
-            *counter_ = 0;
-            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
-        }
-
-        /*!
-        * \brief Returns const pointer to the data contained in the Nth container of type U.
-        */
-        template <typename U, size_t N = 0>
-        const U* data() const
-        {
-            if (typeid(U) == typeid(value_type))
-            {
-                if (*counter_ == N)
-                {
-                    *counter_ = 0;
-                    return static_cast< container_type<U>* >(container_)->data();
-                }
-            }
-            *counter_ = 0;
-            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
-        }
-
-        /*!
         * \brief Returns reference to the Nth container of type U.
         */
         template <typename U, size_t N = 0>
@@ -1996,6 +1928,44 @@ namespace heterogeneous
         }
 
         /*!
+        * \brief Adds val as the first element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0, typename V>
+        void push_front(const V& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->push_front(val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Adds val as the first element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0, typename V>
+        void push_front(V&& val)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->push_front(val);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
         * \brief Removes the last element of the Nth container of type U.
         */
         template<typename U, size_t N = 0>
@@ -2007,6 +1977,25 @@ namespace heterogeneous
                 {
                     *counter_ = 0;
                     static_cast< container_type<U>* >(container_)->pop_back();
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief Removes the first element of the Nth container of type U.
+        */
+        template<typename U, size_t N = 0>
+        void pop_front()
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast< container_type<U>* >(container_)->pop_front();
                     return;
                 }
             }
@@ -2169,7 +2158,7 @@ namespace heterogeneous
         /*!
         * \brief Swaps contents of object with x.
         */
-        void swap(heterovector<T>& x)
+        void swap(heterodeque<T>& x)
         {
             void* temp = container_;
             container_ = x.container_;
@@ -2207,6 +2196,25 @@ namespace heterogeneous
                 {
                     *counter_ = 0;
                     static_cast< container_type<U>* >(container_)->emplace(position, args...);
+                    return;
+                }
+            }
+            *counter_ = 0;
+            throw std::invalid_argument(std::string("Type ") + std::string(typeid(U).name()) + std::string(" with index N=") + std::to_string(N) + std::string(" does not exist in object."));
+        }
+
+        /*!
+        * \brief The Nth container of type U is extended by inserting a new element before its current first element.
+        */
+        template<typename U, size_t N = 0, typename... Args>
+        void emplace_front(Args&&... args)
+        {
+            if (typeid(U) == typeid(value_type))
+            {
+                if (*counter_ == N)
+                {
+                    *counter_ = 0;
+                    static_cast<container_type<U>*>(container_)->emplace_front(args...);
                     return;
                 }
             }
@@ -2322,40 +2330,40 @@ namespace heterogeneous
 
 
     template<typename... Args_lhs, typename... Args_rhs>
-    bool operator==(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
+    bool operator==(const heterodeque<Args_lhs...>& lhs, const heterodeque<Args_rhs...>& rhs)
     {
         return lhs.operator==(rhs);
     }
 
     template<typename... Args_lhs, typename... Args_rhs>
-    bool operator!=(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
+    bool operator!=(const heterodeque<Args_lhs...>& lhs, const heterodeque<Args_rhs...>& rhs)
     {
         return lhs.operator!=(rhs);
     }
 
     template<typename... Args_lhs, typename... Args_rhs>
-    bool operator<(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
+    bool operator<(const heterodeque<Args_lhs...>& lhs, const heterodeque<Args_rhs...>& rhs)
     {
         return lhs.operator<(rhs);
     }
 
     template<typename... Args_lhs, typename... Args_rhs>
-    bool operator<=(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
+    bool operator<=(const heterodeque<Args_lhs...>& lhs, const heterodeque<Args_rhs...>& rhs)
     {
         return lhs.operator<=(rhs);
     }
 
     template<typename... Args_lhs, typename... Args_rhs>
-    bool operator>(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
+    bool operator>(const heterodeque<Args_lhs...>& lhs, const heterodeque<Args_rhs...>& rhs)
     {
         return lhs.operator>(rhs);
     }
 
     template<typename... Args_lhs, typename... Args_rhs>
-    bool operator>=(const heterovector<Args_lhs...>& lhs, const heterovector<Args_rhs...>& rhs)
+    bool operator>=(const heterodeque<Args_lhs...>& lhs, const heterodeque<Args_rhs...>& rhs)
     {
         return lhs.operator>=(rhs);
     }
 }
 
-#endif // HETEROGENEOUS_HETEROVECTOR_HPP
+#endif // HETEROGENEOUS_HETERODEQUE_HPP
