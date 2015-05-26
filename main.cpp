@@ -1,15 +1,28 @@
-#include <deque>
 #include <string>
 #include <iostream>
 
+#include <deque>
+#include <list>
+#include <queue>
+#include <stack>
+#include <vector>
+
 #include "heterodeque.hpp"
+#include "heterolist.hpp"
+#include "heteroqueue.hpp"
+#include "heterostack.hpp"
+#include "heterovector.hpp"
 
 int main()
 {
     try
     {
         //currently, only default constructor implemented
-        heterogeneous::heterodeque<int, double, std::string, int, int, double, std::string> hv;
+        heterogeneous::heterodeque<int, double, std::string, int, int, double, std::string> hd;
+        heterogeneous::heterolist<int, double, std::string, int, int, double, std::string> hl;
+        heterogeneous::heteroqueue<int, double, std::string, int, int, double, std::string> hq;
+        heterogeneous::heterostack<int, double, std::string, int, int, double, std::string> hs;
+        heterogeneous::heterovector<int, double, std::string, int, int, double, std::string> hv;
 
         //direct insertion of doubles and std::strings into heterodeque
         //hv.reserve<double>(3);
@@ -24,7 +37,7 @@ int main()
         //hv.push_back(1.2f); //exception: type float does not exist in hv
 
         //create an std::deque of ints
-        std::deque<int> i;
+        std::vector<int> i;
         i.push_back(9);
         i.push_back(3);
         i.push_back(1);
@@ -88,7 +101,6 @@ int main()
             std::cout << *itr << std::endl;
         }
         std::cout << std::endl;
-
 
         //get info about various types in heterodeque
         std::cout << hv.size<int,0>() << std::endl;

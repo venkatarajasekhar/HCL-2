@@ -5,7 +5,7 @@
 * MS vc12 (Visual Studio 2013)
 * MS vc14 RC (Visual Studio 2015 RC)
 * LLVM clang 3.6.0
- 
+
 
 ## Documentation
 
@@ -27,11 +27,17 @@
    hold elements of different types.  Each type is stored internally in its
    own std::deque, so all operations maintain their inherent benefit over other
    sequence container types.
-   
-* **heterovector.hpp**:
-   Provides complete std::vector functionality with the ability to natively
+
+* **heterolist.hpp**:
+   Provides complete std::list functionality with the ability to natively
    hold elements of different types.  Each type is stored internally in its
-   own std::vector, so all operations maintain their inherent benefit over other
+   own std::list, so all operations maintain their inherent benefit over other
+   sequence container types.
+
+* **heteroqueue.hpp**:
+   Provides complete std::queue functionality with the ability to natively
+   hold elements of different types.  Each type is stored internally in its
+   own std::queue, so all operations maintain their inherent benefit over other
    sequence container types.
 
 * **heterostack.hpp**:
@@ -39,16 +45,16 @@
    hold elements of different types.  Each type is stored internally in its
    own std::stack, so all operations maintain their inherent benefit over other
    sequence container types.
-   
-* **heteroqueue.hpp**:
-   Provides complete std::queue functionality with the ability to natively
+
+* **heterovector.hpp**:
+   Provides complete std::vector functionality with the ability to natively
    hold elements of different types.  Each type is stored internally in its
-   own std::queue, so all operations maintain their inherent benefit over other
+   own std::vector, so all operations maintain their inherent benefit over other
    sequence container types.
 
 Typical usage for all *heterocontainers*:
      Just add template parameter to normal *std::container* methods.
-   
+
         heterogeneous::heterovector<int, double, std::string, double> hv;
 
         hv.push_back<int>(2);
