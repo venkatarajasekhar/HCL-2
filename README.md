@@ -29,9 +29,9 @@
    sequence container types.
 
 * **heteroforward_list.hpp**:
-   Provides complete std::list functionality with the ability to natively
+   Provides complete std::forward_list functionality with the ability to natively
    hold elements of different types.  Each type is stored internally in its
-   own std::list, so all operations maintain their inherent benefit over other
+   own std::forward_list, so all operations maintain their inherent benefit over other
    sequence container types.
    
 * **heterolist.hpp**:
