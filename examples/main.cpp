@@ -7,6 +7,7 @@
 #include <stack>
 #include <vector>
 
+#include "heteroarray.hpp"
 #include "heterodeque.hpp"
 #include "heterolist.hpp"
 #include "heteroqueue.hpp"
@@ -18,6 +19,7 @@ int main()
     try
     {
         //currently, only default constructor implemented
+        heterogeneous::heteroarray<int, heterogeneous::length<2>, double, heterogeneous::length<3> > ha;
         heterogeneous::heterodeque<int, double, std::string, int, int, double, std::string> hd;
         heterogeneous::heterolist<int, double, std::string, int, int, double, std::string> hl;
         heterogeneous::heteroqueue<int, double, std::string, int, int, double, std::string> hq;
