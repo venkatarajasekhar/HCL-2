@@ -362,12 +362,9 @@ namespace heterogeneous
 		template<typename F>
 		bool all_of(F fn)
 		{
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (!fn(*itr)) return false;
-			}
-
-			return next().template all_of(fn);
+			if ( !fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
+			
+			return next().all_of(fn);
 		}
 
 		template<typename U, class F>
@@ -376,10 +373,7 @@ namespace heterogeneous
 			if (typeid(U) != typeid(value_type))
 				return next().template all_of<U>(fn);
 
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (!fn(*itr)) return false;
-			}
+			if ( !fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
 
 			return next().template all_of<U>(fn);
 		}
@@ -387,12 +381,9 @@ namespace heterogeneous
 		template<typename F>
 		bool any_of(F fn)
 		{
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return true;
-			}
+			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return true;
 
-			return next().template any_of(fn);
+			return next().any_of(fn);
 		}
 
 		template<typename U, class F>
@@ -401,10 +392,7 @@ namespace heterogeneous
 			if (typeid(U) != typeid(value_type))
 				return next().template any_of<U>(fn);
 
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return true;
-			}
+			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return true;
 
 			return next().template any_of<U>(fn);
 		}
@@ -412,12 +400,9 @@ namespace heterogeneous
 		template<typename F>
 		bool none_of(F fn)
 		{
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return false;
-			}
+			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
 
-			return next().template none_of(fn);
+			return next().none_of(fn);
 		}
 
 		template<typename U, typename F>
@@ -426,19 +411,16 @@ namespace heterogeneous
 			if (typeid(U) != typeid(value_type))
 				return next().template none_of<U>(fn);
 
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return false;
-			}
+			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
 
 			return next().template none_of<U>(fn);
 		}
 
 		template<typename Function>
-		Function for_each(Function fn)
+		Function for_all(Function fn)
         {
             fn( *static_cast< container_type<value_type>* >(container_) );
-            return next().template for_each(fn);
+            return next().for_all(fn);
         }
 
 		template<typename U, typename Function>
@@ -671,10 +653,7 @@ namespace heterogeneous
 		template<typename F>
 		bool all_of(F fn)
 		{
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (!fn(*itr)) return false;
-			}
+			if (!fn(*static_cast< container_type<value_type>* >(container_))) return false;
 
 			return true;
 		}
@@ -682,12 +661,10 @@ namespace heterogeneous
 		template<typename U, class F>
 		bool all_of(F fn)
 		{
-			if (typeid(U) != typeid(value_type)) return true;
+			if (typeid(U) != typeid(value_type))
+				return true;
 
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (!fn(*itr)) return false;
-			}
+			if (!fn(*static_cast< container_type<value_type>* >(container_))) return false;
 
 			return true;
 		}
@@ -695,10 +672,7 @@ namespace heterogeneous
 		template<typename F>
 		bool any_of(F fn)
 		{
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return true;
-			}
+			if (fn(*static_cast< container_type<value_type>* >(container_))) return true;
 
 			return false;
 		}
@@ -706,12 +680,10 @@ namespace heterogeneous
 		template<typename U, class F>
 		bool any_of(F fn)
 		{
-			if (typeid(U) != typeid(value_type)) return false;
+			if (typeid(U) != typeid(value_type))
+				return false;
 
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return true;
-			}
+			if (fn(*static_cast< container_type<value_type>* >(container_))) return true;
 
 			return false;
 		}
@@ -719,10 +691,7 @@ namespace heterogeneous
 		template<typename F>
 		bool none_of(F fn)
 		{
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return false;
-			}
+			if (fn(*static_cast< container_type<value_type>* >(container_))) return false;
 
 			return true;
 		}
@@ -730,18 +699,16 @@ namespace heterogeneous
 		template<typename U, typename F>
 		bool none_of(F fn)
 		{
-			if (typeid(U) != typeid(value_type)) return true;
+			if (typeid(U) != typeid(value_type))
+				return true;
 
-			for (auto itr = container_->begin(); itr != container_->end(); ++itr)
-			{
-				if (fn(*itr)) return false;
-			}
+			if (fn(*static_cast< container_type<value_type>* >(container_))) return false;
 
 			return true;
 		}
 
 		template<typename Function>
-        Function for_each(Function fn )
+        Function for_all(Function fn )
         {
             fn( *static_cast< container_type<value_type>* >(container_) );
 			return fn;
@@ -803,13 +770,10 @@ namespace heterogeneous
         return lhs.operator>=(rhs);
     }
 
-
-
-
 	template<typename T, typename... Types, class F>
 	bool all_of(vector<T, Types...>& hv, F fn)
 	{
-		return hv.template all_of(fn);
+		return hv.all_of(fn);
 	}
 
 	template<typename U, typename T, typename... Types, class F>
@@ -821,7 +785,7 @@ namespace heterogeneous
 	template<typename T, typename... Types, class F>
 	bool any_of(vector<T, Types...>& hv, F fn)
 	{
-		return hv.template any_of(fn);
+		return hv.any_of(fn);
 	}
 
 	template<typename U, typename T, typename... Types, class F>
@@ -833,7 +797,7 @@ namespace heterogeneous
 	template<typename T, typename... Types, class F>
 	bool none_of(vector<T, Types...>& hv, F fn)
 	{
-		return hv.template none_of(fn);
+		return hv.none_of(fn);
 	}
 
 	template<typename U, typename T, typename... Types, class F>
@@ -842,12 +806,10 @@ namespace heterogeneous
 		hv.template none_of<U>(fn);
 	}
 
-
-
-	template<typename T, typename... Types, class F>
-	auto for_each(vector<T, Types...>& hv, F fn)
+	template<typename T, typename... Types, class Function>
+	Function for_all(vector<T, Types...>& hv, Function fn)
 	{
-		return hv.template for_each(fn);
+		return hv.for_all(fn);
 	}
 
 	template<typename U, typename T, typename... Types, class Function>

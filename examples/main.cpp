@@ -82,7 +82,7 @@ int main()
 
         //reverse iterate (const) over doubles
         hv.get<double,0>().push_back(4335);
-        hv.get<double,1>().push_back(497.0f);
+        hv.get<double,1>().push_back(497.3f);
 
         //element 0
         for (auto itr = hv.get<double, 0>().crbegin(); itr != hv.get<double, 0>().crend(); ++itr)
@@ -125,8 +125,16 @@ int main()
         std::cout << hv.multiplicity<std::string>() << " double multiplicity" << std::endl;
         std::cout << std::endl;
 
+        // print each double
+		heterogeneous::for_each<double>( hv, [&](auto C)
+		{
+		for (auto itr = C.begin(); itr != C.end(); ++itr)
+            std::cout << *itr << std::endl;
+        std::cout << std::endl;
+		});
 		
-        heterogeneous::for_each<std::string>( hv, [&](auto C)
+		// print all values
+		heterogeneous::for_all( hv, [&](auto C)
 		{
 		for (auto itr = C.begin(); itr != C.end(); ++itr)
             std::cout << *itr << std::endl;

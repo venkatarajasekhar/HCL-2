@@ -1,0 +1,68 @@
+\hypertarget{heterogeneous_8hpp}{}\section{heterogeneous.\+hpp File Reference}
+\label{heterogeneous_8hpp}\index{heterogeneous.\+hpp@{heterogeneous.\+hpp}}
+{\ttfamily \#include $<$assert.\+h$>$}\\*
+{\ttfamily \#include $<$stdexcept$>$}\\*
+{\ttfamily \#include $<$typeinfo$>$}\\*
+{\ttfamily \#include $<$typeindex$>$}\\*
+{\ttfamily \#include $<$string$>$}\\*
+{\ttfamily \#include $<$boost\textbackslash{}any.\+hpp$>$}\\*
+{\ttfamily \#include $<$vector$>$}\\*
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classheterogeneous_1_1vector_3_01_t_00_01_types_8_8_8_4}{heterogeneous\+::vector$<$ T, Types...$>$}
+\item 
+class \hyperlink{classheterogeneous_1_1adaptor}{heterogeneous\+::adaptor$<$ container\+\_\+type $>$}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{namespaceboost_a25669ebae33c3b79e39c662164eb80ef}{}{\footnotesize template$<$typename container\+\_\+type $>$ }\\container\+\_\+type \& {\bfseries boost\+::get} (boost\+::any \&a)\label{namespaceboost_a25669ebae33c3b79e39c662164eb80ef}
+
+\begin{DoxyCompactList}\small\item\em get$<$container\+\_\+type$>$ overload for boost\+::any. \end{DoxyCompactList}\item 
+\hypertarget{namespaceheterogeneous_a0a3b650d2f47c4f628d9a3dcff0b370a}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator==} (const vector$<$ Args\+\_\+lhs...$>$ \&lhs, const vector$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a0a3b650d2f47c4f628d9a3dcff0b370a}
+
+\item 
+\hypertarget{namespaceheterogeneous_ae6985f32bf7983480eefda38b48a55ed}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator!=} (const vector$<$ Args\+\_\+lhs...$>$ \&lhs, const vector$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_ae6985f32bf7983480eefda38b48a55ed}
+
+\item 
+\hypertarget{namespaceheterogeneous_acaee96b9fb0a7693e403547a9ea6a2f7}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$<$} (const vector$<$ Args\+\_\+lhs...$>$ \&lhs, const vector$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_acaee96b9fb0a7693e403547a9ea6a2f7}
+
+\item 
+\hypertarget{namespaceheterogeneous_abd114a18a3af8af65a7ecf960765721a}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$<$=} (const vector$<$ Args\+\_\+lhs...$>$ \&lhs, const vector$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_abd114a18a3af8af65a7ecf960765721a}
+
+\item 
+\hypertarget{namespaceheterogeneous_ab209e10ead0969fe22590f33ddd9ca56}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$>$} (const vector$<$ Args\+\_\+lhs...$>$ \&lhs, const vector$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_ab209e10ead0969fe22590f33ddd9ca56}
+
+\item 
+\hypertarget{namespaceheterogeneous_a53f23a8cfbdf0f70d64cfcdb54113051}{}{\footnotesize template$<$typename... Args\+\_\+lhs, typename... Args\+\_\+rhs$>$ }\\bool {\bfseries heterogeneous\+::operator$>$=} (const vector$<$ Args\+\_\+lhs...$>$ \&lhs, const vector$<$ Args\+\_\+rhs...$>$ \&rhs)\label{namespaceheterogeneous_a53f23a8cfbdf0f70d64cfcdb54113051}
+
+\item 
+\hypertarget{namespaceheterogeneous_ab22f5da4616f5e62c92395d4577fe2f3}{}{\footnotesize template$<$typename T , typename... Types, class F $>$ }\\bool {\bfseries heterogeneous\+::all\+\_\+of} (vector$<$ T, Types...$>$ \&hv, F fn)\label{namespaceheterogeneous_ab22f5da4616f5e62c92395d4577fe2f3}
+
+\item 
+\hypertarget{namespaceheterogeneous_a8574e41735c20e7fb8c6145150b9d412}{}{\footnotesize template$<$typename U , typename T , typename... Types, class F $>$ }\\bool {\bfseries heterogeneous\+::all\+\_\+of} (vector$<$ T, Types...$>$ \&hv, F fn)\label{namespaceheterogeneous_a8574e41735c20e7fb8c6145150b9d412}
+
+\item 
+\hypertarget{namespaceheterogeneous_a7261379f57f2dd672ce3e48ce4b2e2fd}{}{\footnotesize template$<$typename T , typename... Types, class F $>$ }\\bool {\bfseries heterogeneous\+::any\+\_\+of} (vector$<$ T, Types...$>$ \&hv, F fn)\label{namespaceheterogeneous_a7261379f57f2dd672ce3e48ce4b2e2fd}
+
+\item 
+\hypertarget{namespaceheterogeneous_a78e15fdc9ec62f899cea57cdafe3daeb}{}{\footnotesize template$<$typename U , typename T , typename... Types, class F $>$ }\\bool {\bfseries heterogeneous\+::any\+\_\+of} (vector$<$ T, Types...$>$ \&hv, F fn)\label{namespaceheterogeneous_a78e15fdc9ec62f899cea57cdafe3daeb}
+
+\item 
+\hypertarget{namespaceheterogeneous_a2353f35964e499ad733e17b5596a6916}{}{\footnotesize template$<$typename T , typename... Types, class F $>$ }\\bool {\bfseries heterogeneous\+::none\+\_\+of} (vector$<$ T, Types...$>$ \&hv, F fn)\label{namespaceheterogeneous_a2353f35964e499ad733e17b5596a6916}
+
+\item 
+\hypertarget{namespaceheterogeneous_af9a04b63eed90b64476209f2d84af326}{}{\footnotesize template$<$typename U , typename T , typename... Types, class F $>$ }\\bool {\bfseries heterogeneous\+::none\+\_\+of} (vector$<$ T, Types...$>$ \&hv, F fn)\label{namespaceheterogeneous_af9a04b63eed90b64476209f2d84af326}
+
+\item 
+\hypertarget{namespaceheterogeneous_ad5e4394d6feb6e7647ce1f4e61eeda79}{}{\footnotesize template$<$typename T , typename... Types, class Function $>$ }\\Function {\bfseries heterogeneous\+::for\+\_\+all} (vector$<$ T, Types...$>$ \&hv, Function fn)\label{namespaceheterogeneous_ad5e4394d6feb6e7647ce1f4e61eeda79}
+
+\item 
+\hypertarget{namespaceheterogeneous_a126ec4f4f88e2628a8c91d80cb860d16}{}{\footnotesize template$<$typename U , typename T , typename... Types, class Function $>$ }\\Function {\bfseries heterogeneous\+::for\+\_\+each} (vector$<$ T, Types...$>$ \&hv, Function fn)\label{namespaceheterogeneous_a126ec4f4f88e2628a8c91d80cb860d16}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This templated class defines an interface for retrieving and modifying the contents of a container of any type-\/erased data type (boost\+::any, boost\+::variant, etc) 
