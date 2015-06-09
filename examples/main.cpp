@@ -7,113 +7,116 @@
 #include <stack>
 #include <vector>
 
-#include "heteroarray.hpp"
-#include "heterodeque.hpp"
-#include "heterolist.hpp"
-#include "heteroqueue.hpp"
-#include "heterostack.hpp"
-#include "heterovector.hpp"
+#include "heterogeneous.hpp"
+
+
+template<typename T>
+void func(T C)
+{
+	for (auto itr = C.begin(); itr != C.end(); ++itr)
+		std::cout << *itr << std::endl;
+	std::cout << std::endl;
+}
+
 
 int main()
 {
     try
     {
         //currently, only default constructor implemented
-        heterogeneous::heteroarray<int, heterogeneous::length<2>, double, heterogeneous::length<3> > ha;
-        heterogeneous::heterodeque<int, double, std::string, int, int, double, std::string> hd;
-        heterogeneous::heterolist<int, double, std::string, int, int, double, std::string> hl;
-        heterogeneous::heteroqueue<int, double, std::string, int, int, double, std::string> hq;
-        heterogeneous::heterostack<int, double, std::string, int, int, double, std::string> hs;
-        heterogeneous::heterovector<int, double, std::string, int, int, double, std::string> hv;
+        heterogeneous::vector<int, double, std::string, int, int, double, std::string> hv;
 
-        //direct insertion of doubles and std::strings into heterodeque
-        //hv.reserve<double>(3);
-        hv.push_back<double>(4.3);
-        hv.push_back<std::string,0>("one");
-        hv.push_back<std::string,0>(std::string("two"));
-        hv.push_back<double, 0>(3.411);
-        hv.push_back<std::string,0>(std::string("three"));
+        hv.get<double>().push_back(4.3);
+        hv.get<std::string, 0>().push_back("one");
+        hv.get<std::string, 0>().push_back(std::string("two"));
+        hv.get<double, 0>().push_back(3.411);
+        hv.get<std::string, 0>().push_back(std::string("three"));
         std::string four = "four";
-        hv.push_back<std::string, 0>(four);
-        hv.push_back<double>(99.999);
+        hv.get<std::string, 0>().push_back(four);
+        hv.get<double>().push_back(99.999);
         //hv.push_back(1.2f); //exception: type float does not exist in hv
 
-        //create an std::deque of ints
+
+        //create an std::vector of ints
         std::vector<int> i;
         i.push_back(9);
         i.push_back(3);
         i.push_back(1);
 
-        //assignment of std::deque<int> to heterodeque
-        hv.set<int,1>(i); //sets second element of ints to i
-        hv.resize<int>(4, 35); //add 4th value of 35, default to first int element
-        hv.insert<int>(hv.begin<int,0>(), std::initializer_list < int > {0, 0}); //inserts two 0s at beginning of first int element
-        hv.emplace_back<int,1>(4);  //add value of 4 to back of second element of ints
+
+        //assignment of std::vector<int> to heterovector
+        hv.get<int, 1>() = i;
+        hv.get<int>().resize(4, 35); //add 4th value of 35, default to first int element
+
 
         //============================
         //data access methods below...
         //============================
-        std::cout << hv.front<std::string>() << std::endl; //first std::string
-        std::cout << hv.back<double>() << std::endl; //last double
-        std::cout << hv.at<double>(0) << std::endl; //first double
-        //std::cout << *hv.data<double>() << std::endl; //first double
+        std::cout << hv.get<std::string>().front() << std::endl; //first std::string
+        std::cout << hv.get<double>().back() << std::endl; //last double
+        std::cout << hv.get<double>().at(0) << std::endl; //first double
         std::cout << std::endl;
+
 
         //iterate over ints
         //element 0
-        for (auto itr = hv.begin<int,0>(); itr != hv.end<int,0>(); ++itr)
+        for (auto itr = hv.get<int, 0>().begin(); itr != hv.get<int, 0>().end(); ++itr)
         {
             std::cout << *itr << std::endl;
         }
         std::cout << std::endl;
         //element 1
-        for (auto itr = hv.begin<int,1>(); itr != hv.end<int,1>(); ++itr)
+        for (auto itr = hv.get<int, 1>().begin(); itr != hv.get<int, 1>().end(); ++itr)
         {
             std::cout << *itr << std::endl;
         }
         std::cout << std::endl;
 
         //reverse iterate over strings
-        hv.container<std::string,0>()->push_back("implicitly convert me to a std::string!"); //implicit conversion
-        for (auto itr = hv.rbegin<std::string>(); itr != hv.rend<std::string>(); ++itr)
+        hv.get<std::string,0>().push_back("implicitly convert me to a std::string!"); //implicit conversion
+        for (auto itr = hv.get<std::string>().rbegin(); itr != hv.get<std::string>().rend(); ++itr)
         {
             std::cout << *itr << std::endl;
         }
         std::cout << std::endl;
 
         //reverse iterate (const) over doubles
-        hv.container<double,0>()->push_back(4335);
-        hv.container<double,1>()->push_back(497.0f);
+        hv.get<double,0>().push_back(4335);
+        hv.get<double,1>().push_back(497.0f);
+
         //element 0
-        for (auto itr = hv.crbegin<double,0>(); itr != hv.crend<double,0>(); ++itr)
-        {
-            std::cout << *itr << std::endl;
-        }
-        std::cout << std::endl;
-        //element 1
-        for (auto itr = hv.crbegin<double, 1>(); itr != hv.crend<double, 1>(); ++itr)
-        {
-            std::cout << *itr << std::endl;
-        }
-        std::cout << std::endl;
-        //erase last double and iterate (const) 
-        hv.erase<double>(--hv.end<double>());
-        for (auto itr = hv.cbegin<double>(); itr != hv.cend<double>(); ++itr)
+        for (auto itr = hv.get<double, 0>().crbegin(); itr != hv.get<double, 0>().crend(); ++itr)
         {
             std::cout << *itr << std::endl;
         }
         std::cout << std::endl;
 
+        //element 1
+        for (auto itr = hv.get<double, 1>().crbegin(); itr != hv.get<double, 1>().crend(); ++itr)
+        {
+            std::cout << *itr << std::endl;
+        }
+        std::cout << std::endl;
+
+        //erase last double and iterate (const) 
+        hv.get<double>().erase(--hv.get<double>().end());
+        for (auto itr = hv.get<double>().cbegin(); itr != hv.get<double>().cend(); ++itr)
+        {
+            std::cout << *itr << std::endl;
+        }
+        std::cout << std::endl;
+
+
         //get info about various types in heterodeque
-        std::cout << hv.size<int,0>() << std::endl;
-        std::cout << hv.size<int,1>() << std::endl;
-        std::cout << hv.size<int,2>() << std::endl;
-        //std::cout << hv.size<int,3>() << std::endl;  //exception, fouth element of type int doesn't exist
-        std::cout << hv.size<double>() << std::endl;
-        std::cout << hv.size<std::string>() << std::endl;
+        std::cout << hv.get<int, 0>().size() << std::endl;
+        std::cout << hv.get<int, 1>().size() << std::endl;
+        std::cout << hv.get<int, 2>().size() << std::endl;
+        std::cout << hv.get<double>().size() << std::endl;
+        std::cout << hv.get<std::string>().size() << std::endl;
         std::cout << hv.size() << " total number of type elements in heterodeque" << std::endl;
         std::cout << hv.type<2>().name() << " type of third element in heterodeque" << std::endl;
         std::cout << std::endl;
+
 
         //return type multiplicity
         std::cout << hv.multiplicity<int>() << " integer multiplicity" << std::endl;
@@ -122,10 +125,14 @@ int main()
         std::cout << hv.multiplicity<std::string>() << " double multiplicity" << std::endl;
         std::cout << std::endl;
 
-        // check whether heterodeque contains type
-        std::cout << hv.contains<double>() << std::endl;
-        std::cout << hv.contains<float>() << std::endl;
-        std::cout << hv.contains<std::string>() << std::endl;
+		
+        heterogeneous::for_each<std::string>( hv, [&](auto C)
+		{
+		for (auto itr = C.begin(); itr != C.end(); ++itr)
+            std::cout << *itr << std::endl;
+        std::cout << std::endl;
+		});
+		
     }
     catch (std::exception err)
     {
