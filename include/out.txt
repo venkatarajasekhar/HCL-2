@@ -1,0 +1,29 @@
+In file included from main.cpp:10:
+./heterogeneous.hpp:32:5: warning: '/*' within block comment [-Wcomment]
+    /*!
+    ^
+./heterogeneous.hpp:36:32: error: use of undeclared identifier 'boost'
+    inline container_type& get(boost::any& a)
+                               ^
+./heterogeneous.hpp:38:17: error: use of undeclared identifier 'boost'
+        return *boost::any_cast<container_type>(&a);
+                ^
+./heterogeneous.hpp:38:33: error: 'container_type' does not refer to a value
+        return *boost::any_cast<container_type>(&a);
+                                ^
+./heterogeneous.hpp:35:23: note: declared here
+    template<typename container_type>
+                      ^
+./heterogeneous.hpp:40:1: error: extraneous closing brace ('}')
+}
+^
+./heterogeneous.hpp:41:2: error: expected unqualified-id
+*/
+ ^
+./heterogeneous.hpp:1100:20: error: use of undeclared identifier 'boost'
+            return boost::get<native_t>(*(pointer_->container_->begin() + index_));
+                   ^
+./heterogeneous.hpp:1170:20: error: use of undeclared identifier 'boost'
+            return boost::get<native_t>(*(pointer_->container_->rbegin() + index_));
+                   ^
+1 warning and 7 errors generated.

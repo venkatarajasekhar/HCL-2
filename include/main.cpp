@@ -1,7 +1,23 @@
 #include <string>
 #include <iostream>
 
+#include <deque>
+#include <list>
+#include <queue>
+#include <stack>
+#include <vector>
+
 #include "heterogeneous.hpp"
+
+
+template<typename T>
+void func(T C)
+{
+	for (auto itr = C.begin(); itr != C.end(); ++itr)
+		std::cout << *itr << std::endl;
+	std::cout << std::endl;
+}
+
 
 int main()
 {
@@ -11,7 +27,7 @@ int main()
 
 		hv.get<int>().push_back(2);
 		hv.get<double>().push_back(3.1415); // implicit element 0
-		hv.get<double, 0>().push_back(9.1); // explicit element 0
+		hv.get<double, 0>().push_back(9.1); // explicitly element 0
 		hv.get<std::string>().push_back(std::string("hello "));
 		hv.get<std::string>().push_back("world!");
 
@@ -27,7 +43,7 @@ int main()
 			std::cout << *itr << std::endl;
 		std::cout << std::endl;
 
-		// for_each vector of double, print all elements
+		// print all doubles
 		heterogeneous::for_each<double>(hv, [&](auto C)
 		{
 			for (auto itr = C.begin(); itr != C.end(); ++itr)
@@ -37,7 +53,7 @@ int main()
 			std::cout << std::endl;
 		});
 
-		// for_all vectors, print all elements
+		// print all items
 		heterogeneous::for_all(hv, [&](auto C)
 		{
 			for (auto itr = C.begin(); itr != C.end(); ++itr)
@@ -47,18 +63,6 @@ int main()
 			std::cout << std::endl;
 		});
 		
-		// check if all containers contain elements all greater than 0.0
-		std::cout <<
-		heterogeneous::all_of<double>(hv, [](auto C)->bool
-		{
-			for (auto itr = C.begin(); itr != C.end(); ++itr)
-			{
-				if( !(*itr > 0.0) ) return false;
-			}
-
-			return true;
-		})
-		<< std::endl;
     }
     catch (std::exception err)
     {

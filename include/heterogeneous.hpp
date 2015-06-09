@@ -25,6 +25,7 @@
 
 #include <string>
 
+
 #include <boost\any.hpp>
 namespace boost
 {
@@ -236,6 +237,7 @@ namespace heterogeneous
         bool lte(const vector<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be less than, but can be equal!
+			// Therefore, don't need to check size.
 
             // number of elements must match
             if (static_cast<container_type<value_type>*>(container_)->size() != rhs.get<value_type, 0>().size()) return false;
@@ -250,6 +252,7 @@ namespace heterogeneous
         bool gte(const vector<value_type, Types...>& rhs)
         {
             // if zero elements, cannot be greater than, but can be equal!
+			// Therefore, don't need to check size.
 
             // number of elements must match
             if (static_cast<container_type<value_type>*>(container_)->size() != rhs.get<value_type, 0>().size()) return false;
@@ -359,59 +362,59 @@ namespace heterogeneous
         }
 		
 		// Algorithms
-		template<typename F>
-		bool all_of(F fn)
+		template<typename Function>
+		bool all_of(Function fn)
 		{
 			if ( !fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
 			
 			return next().all_of(fn);
 		}
 
-		template<typename U, class F>
-		bool all_of(F fn)
+		template<typename U, class Function>
+		bool all_of(Function fn)
 		{
 			if (typeid(U) != typeid(value_type))
 				return next().template all_of<U>(fn);
 
-			if ( !fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
+			if ( !fn(*static_cast< container_type<U>* >(container_)) ) return false;
 
 			return next().template all_of<U>(fn);
 		}
 
-		template<typename F>
-		bool any_of(F fn)
+		template<typename Function>
+		bool any_of(Function fn)
 		{
 			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return true;
 
 			return next().any_of(fn);
 		}
 
-		template<typename U, class F>
-		bool any_of(F fn)
+		template<typename U, class Function>
+		bool any_of(Function fn)
 		{
 			if (typeid(U) != typeid(value_type))
 				return next().template any_of<U>(fn);
 
-			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return true;
+			if ( fn(*static_cast< container_type<U>* >(container_)) ) return true;
 
 			return next().template any_of<U>(fn);
 		}
 
-		template<typename F>
-		bool none_of(F fn)
+		template<typename Function>
+		bool none_of(Function fn)
 		{
 			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
 
 			return next().none_of(fn);
 		}
 
-		template<typename U, typename F>
-		bool none_of(F fn)
+		template<typename U, typename Function>
+		bool none_of(Function fn)
 		{
 			if (typeid(U) != typeid(value_type))
 				return next().template none_of<U>(fn);
 
-			if ( fn(*static_cast< container_type<value_type>* >(container_)) ) return false;
+			if ( fn(*static_cast< container_type<U>* >(container_)) ) return false;
 
 			return next().template none_of<U>(fn);
 		}
@@ -427,7 +430,7 @@ namespace heterogeneous
 		Function for_each(Function fn)
 		{
 			if(typeid(U) == typeid(value_type))
-			  fn(*static_cast< container_type<value_type>* >(container_));
+			  fn(*static_cast< container_type<U>* >(container_));
 
 			return next().template for_each<U>(fn);
 		}
@@ -569,6 +572,7 @@ namespace heterogeneous
         bool lte(const vector<value_type>& rhs)
         {
             // if zero elements, cannot be less than, but can be equal!
+			// Therefore, don't need to check size.
 
             // number of elements must match
             if (static_cast<container_type<value_type>*>(container_)->size() != rhs.get<value_type, 0>().size()) return false;
@@ -578,6 +582,7 @@ namespace heterogeneous
         bool gte(const vector<value_type>& rhs)
         {
             // if zero elements, cannot be greater than, but can be equal!
+			// Therefore, don't need to check size.
 
             // number of elements must match
             if (static_cast<container_type<value_type>*>(container_)->size() != rhs.get<value_type, 0>().size()) return false;
@@ -650,59 +655,59 @@ namespace heterogeneous
         }
 
 		// Algorithms
-		template<typename F>
-		bool all_of(F fn)
+		template<typename Function>
+		bool all_of(Function fn)
 		{
 			if (!fn(*static_cast< container_type<value_type>* >(container_))) return false;
 
 			return true;
 		}
 
-		template<typename U, class F>
-		bool all_of(F fn)
+		template<typename U, class Function>
+		bool all_of(Function fn)
 		{
 			if (typeid(U) != typeid(value_type))
 				return true;
 
-			if (!fn(*static_cast< container_type<value_type>* >(container_))) return false;
+			if (!fn(*static_cast< container_type<U>* >(container_))) return false;
 
 			return true;
 		}
 
-		template<typename F>
-		bool any_of(F fn)
+		template<typename Function>
+		bool any_of(Function fn)
 		{
 			if (fn(*static_cast< container_type<value_type>* >(container_))) return true;
 
 			return false;
 		}
 
-		template<typename U, class F>
-		bool any_of(F fn)
+		template<typename U, class Function>
+		bool any_of(Function fn)
 		{
 			if (typeid(U) != typeid(value_type))
 				return false;
 
-			if (fn(*static_cast< container_type<value_type>* >(container_))) return true;
+			if ( fn(*static_cast< container_type<U>* >(container_)) ) return true;
 
 			return false;
 		}
 
-		template<typename F>
-		bool none_of(F fn)
+		template<typename Function>
+		bool none_of(Function fn)
 		{
 			if (fn(*static_cast< container_type<value_type>* >(container_))) return false;
 
 			return true;
 		}
 
-		template<typename U, typename F>
-		bool none_of(F fn)
+		template<typename U, typename Function>
+		bool none_of(Function fn)
 		{
 			if (typeid(U) != typeid(value_type))
 				return true;
 
-			if (fn(*static_cast< container_type<value_type>* >(container_))) return false;
+			if (fn(*static_cast< container_type<U>* >(container_))) return false;
 
 			return true;
 		}
@@ -718,7 +723,7 @@ namespace heterogeneous
 		Function for_each(Function fn)
 		{
 			if( typeid(U) == typeid(value_type) )
-			  fn(*static_cast< container_type<value_type>* >(container_));
+			  fn(*static_cast< container_type<U>* >(container_));
 
 			return fn;
 		}
@@ -770,40 +775,40 @@ namespace heterogeneous
         return lhs.operator>=(rhs);
     }
 
-	template<typename T, typename... Types, class F>
-	bool all_of(vector<T, Types...>& hv, F fn)
+	template<typename T, typename... Types, class Function>
+	bool all_of(vector<T, Types...>& hv, Function fn)
 	{
 		return hv.all_of(fn);
 	}
 
-	template<typename U, typename T, typename... Types, class F>
-	bool all_of(vector<T, Types...>& hv, F fn)
+	template<typename U, typename T, typename... Types, class Function>
+	bool all_of(vector<T, Types...>& hv, Function fn)
 	{
-		hv.template all_of<U>(fn);
+		return hv.template all_of<U>(fn);
 	}
 
-	template<typename T, typename... Types, class F>
-	bool any_of(vector<T, Types...>& hv, F fn)
+	template<typename T, typename... Types, class Function>
+	bool any_of(vector<T, Types...>& hv, Function fn)
 	{
 		return hv.any_of(fn);
 	}
 
-	template<typename U, typename T, typename... Types, class F>
-	bool any_of(vector<T, Types...>& hv, F fn)
+	template<typename U, typename T, typename... Types, class Function>
+	bool any_of(vector<T, Types...>& hv, Function fn)
 	{
-		hv.template any_of<U>(fn);
+		return hv.template any_of<U>(fn);
 	}
 
-	template<typename T, typename... Types, class F>
-	bool none_of(vector<T, Types...>& hv, F fn)
+	template<typename T, typename... Types, class Function>
+	bool none_of(vector<T, Types...>& hv, Function fn)
 	{
 		return hv.none_of(fn);
 	}
 
-	template<typename U, typename T, typename... Types, class F>
-	bool none_of(vector<T, Types...>& hv, F fn)
+	template<typename U, typename T, typename... Types, class Function>
+	bool none_of(vector<T, Types...>& hv, Function fn)
 	{
-		hv.template none_of<U>(fn);
+		return hv.template none_of<U>(fn);
 	}
 
 	template<typename T, typename... Types, class Function>
