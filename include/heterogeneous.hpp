@@ -420,10 +420,10 @@ namespace heterogeneous
 		}
 
 		template<typename Function>
-		Function for_all(Function fn)
+		Function for_each(Function fn)
         {
             fn( *static_cast< container_type<value_type>* >(container_) );
-            return next().for_all(fn);
+            return next().for_each(fn);
         }
 
 		template<typename U, typename Function>
@@ -713,7 +713,7 @@ namespace heterogeneous
 		}
 
 		template<typename Function>
-        Function for_all(Function fn )
+        Function for_each(Function fn )
         {
             fn( *static_cast< container_type<value_type>* >(container_) );
 			return fn;
@@ -812,9 +812,9 @@ namespace heterogeneous
 	}
 
 	template<typename T, typename... Types, class Function>
-	Function for_all(vector<T, Types...>& hv, Function fn)
+	Function for_each(vector<T, Types...>& hv, Function fn)
 	{
-		return hv.for_all(fn);
+		return hv.for_each(fn);
 	}
 
 	template<typename U, typename T, typename... Types, class Function>

@@ -28,7 +28,7 @@ int main()
 		std::cout << std::endl;
 
 		// for_each vector of double, print all elements
-		heterogeneous::for_each<double>(hv, [&](auto C)
+		heterogeneous::for_each<double>(hv, [](const auto& C)
 		{
 			for (auto itr = C.begin(); itr != C.end(); ++itr)
 			{
@@ -38,7 +38,7 @@ int main()
 		});
 
 		// for_all vectors, print all elements
-		heterogeneous::for_all(hv, [&](auto C)
+		heterogeneous::for_each(hv, [](const auto& C)
 		{
 			for (auto itr = C.begin(); itr != C.end(); ++itr)
 			{
@@ -49,7 +49,7 @@ int main()
 		
 		// check if all containers contain elements all greater than 0.0
 		std::cout <<
-		heterogeneous::all_of<double>(hv, [](auto C)->bool
+		heterogeneous::all_of<double>(hv, [](const auto& C)->bool
 		{
 			for (auto itr = C.begin(); itr != C.end(); ++itr)
 			{
